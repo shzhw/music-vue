@@ -1,6 +1,14 @@
 <template>
   <div class="recommed">
-    <div class="slider_wrapper"></div>
+    <div class="slider_wrapper">
+      <slider>
+        <div v-for="item in slider">
+          <a :href="item.linkUrl">
+            <img :src="item.picUrl" alt="">
+          </a>
+        </div>
+      </slider>
+    </div>
     <div class="recommed_list">
       <h2 class="list_title">热门歌单推荐</h2>
       <ul></ul>
@@ -9,16 +17,30 @@
 </template>
 
 <script>
-  import getRecommend from '@/api/recommend.js';
+  import {getRecommend} from '@/api/recommend';
+  import {ERR_OK} from '@/api/config';
+  import Slider from '@/base/slider/slider';
 
   export default {
     created() {
-
+      this._getRecommend();
+    },
+    data() {
+      return {
+        slider: []
+      };
     },
     methods: {
       _getRecommend() {
-        getRecommend();
+        getRecommend().then((res) => {
+          if (res.code === ERR_OK) {
+            this.slider = res.data.slider;
+          }
+        });
       }
+    },
+    components: {
+      Slider
     }
   };
 </script>
@@ -28,7 +50,6 @@
   .recommed
     .slider_wrapper
       width: 100%
-      height: 150px
     .recommed_list
       .list_title
         text-align: center;
