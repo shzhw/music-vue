@@ -3,7 +3,7 @@
  */
 export function addClass(el, className) {
   if (hasClass(el, className)) {
-    return
+    return;
   }
   let newClass = el.className.split(' ');
   newClass.push(className);
@@ -11,6 +11,6 @@ export function addClass(el, className) {
 }
 
 export function hasClass(el, className) {
-  let reg = new RegExp(`(^|\\s)${className}(\\s|$)`)
-  return reg.test(el.className)
+  let reg = new RegExp(`(^|\\s)${className}(\\s|$)`);
+  return reg.test(el.className);
 }

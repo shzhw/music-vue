@@ -1,8 +1,8 @@
 <template>
   <div class="recommed">
-    <div class="slider_wrapper">
+    <div v-if="sliderData.length" class="slider_wrapper">
       <slider>
-        <div v-for="item in slider">
+        <div v-for="item in sliderData">
           <a :href="item.linkUrl">
             <img :src="item.picUrl" alt="">
           </a>
@@ -27,14 +27,14 @@
     },
     data() {
       return {
-        slider: []
+        sliderData: []
       };
     },
     methods: {
       _getRecommend() {
         getRecommend().then((res) => {
           if (res.code === ERR_OK) {
-            this.slider = res.data.slider;
+            this.sliderData = res.data.slider;
           }
         });
       }
@@ -49,9 +49,14 @@
   @import '../../common/stylus/variable.styl'
   .recommed
     .slider_wrapper
+      position: relative
       width: 100%
+      overflow: hidden
     .recommed_list
       .list_title
+        height: 65px
+        line-height: 65px
+        font-size: $font-size-medium
         text-align: center;
         color: $color-theme
 </style>
