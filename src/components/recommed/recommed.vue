@@ -1,18 +1,35 @@
 <template>
   <div class="recommed">
-    <div v-if="sliderData.length" class="slider_wrapper">
-      <slider>
-        <div v-for="item in sliderData">
-          <a :href="item.linkUrl">
-            <img :src="item.picUrl" alt="">
-          </a>
+    <scroll ref="scroll" class="recommed_content" :data="discList">
+      <div>
+        <div v-if="sliderData.length" class="slider_wrapper">
+          <slider>
+            <div v-for="item in sliderData">
+              <a :href="item.linkUrl">
+                <img @load="imgOnload" :src="item.picUrl" alt="">
+              </a>
+            </div>
+          </slider>
         </div>
-      </slider>
-    </div>
-    <div class="recommed_list">
-      <h2 class="list_title">热门歌单推荐</h2>
-      <ul></ul>
-    </div>
+        <div class="recommed_list">
+          <h2 class="list_title">热门歌单推荐</h2>
+          <ul>
+            <li class="item" v-for="item in discList">
+              <div class="icon">
+                <img v-lazy="item.imgurl" alt="" width="60" height="60" />
+              </div>
+              <div class="text">
+                <h2 class="name" v-html="item.creator.name"></h2>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="loading_wrapper" v-show="!discList.length">
+        <loading></loading>
+      </div>
+    </scroll>
   </div>
 </template>
 
@@ -20,6 +37,8 @@
   import {getRecommend, getDiscList} from '@/api/recommend';
   import {ERR_OK} from '@/api/config';
   import Slider from '@/base/slider/slider';
+  import Scroll from '@/base/scroll/scroll';
+  import Loading from '@/base/loading/loading';
 
   export default {
     created() {
@@ -31,7 +50,9 @@
     },
     data() {
       return {
-        sliderData: []
+        sliderData: [],
+        discList: [],
+        checkLoaded: true
       };
     },
     methods: {
@@ -45,13 +66,21 @@
       _getDiscList() {
         getDiscList().then((res) => {
           if (res.code === ERR_OK) {
-            console.log(res);
+            this.discList = res.data.list;
           }
         });
+      },
+      imgOnload() {
+        if (this.checkLoaded) {
+          this.$refs.scroll.refresh();
+          this.checkLoaded = false;
+        }
       }
     },
     components: {
-      Slider
+      Slider,
+      Scroll,
+      Loading
     }
   };
 </script>
@@ -59,15 +88,50 @@
 <style scoped lang="stylus">
   @import '../../common/stylus/variable.styl'
   .recommed
-    .slider_wrapper
-      position: relative
-      width: 100%
+    position: fixed
+    top: 88px
+    bottom: 0
+    width: 100%
+    .recommed_content
+      height: 100%
       overflow: hidden
-    .recommed_list
-      .list_title
-        height: 65px
-        line-height: 65px
-        font-size: $font-size-medium
-        text-align: center;
-        color: $color-theme
+      .slider_wrapper
+        position: relative
+        width: 100%
+        overflow: hidden
+      .recommed_list
+        .list_title
+          height: 65px
+          line-height: 65px
+          font-size: $font-size-medium
+          text-align: center;
+          color: $color-theme
+        ul
+          padding:0 15px
+          .item
+            display: flex
+            padding:0 20px 20px 20px
+            align-items:center
+            .icon
+              flex:0 0 60px
+              width: 60px
+              padding-right: 20px
+            .text
+              flex:1
+              display: flex
+              flex-direction:column
+              justify-content:center
+              line-height: 20px
+              overflow: hidden
+              font-size:$font-size-medium
+              .name
+                margin-bottom: 10px
+                color: $color-text
+              .desc
+                color: $color-text-d
+      .loading_wrapper
+        position: absolute
+        width: 100%
+        top: 50%
+        transform:translateY(-50%);
 </style>
