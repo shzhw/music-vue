@@ -16,7 +16,7 @@
           <ul>
             <li class="item" v-for="item in discList">
               <div class="icon">
-                <img v-lazy="item.imgurl" alt="" width="60" height="60" />
+                <img v-lazy="item.imgurl" alt="" width="60" height="60"/>
               </div>
               <div class="text">
                 <h2 class="name" v-html="item.creator.name"></h2>
@@ -107,23 +107,23 @@
           text-align: center;
           color: $color-theme
         ul
-          padding:0 15px
+          padding: 0 15px
           .item
             display: flex
-            padding:0 20px 20px 20px
-            align-items:center
+            padding: 0 20px 20px 20px
+            align-items: center
             .icon
-              flex:0 0 60px
+              flex: 0 0 60px
               width: 60px
               padding-right: 20px
             .text
-              flex:1
+              flex: 1
               display: flex
-              flex-direction:column
-              justify-content:center
+              flex-direction: column
+              justify-content: center
               line-height: 20px
               overflow: hidden
-              font-size:$font-size-medium
+              font-size: $font-size-medium
               .name
                 margin-bottom: 10px
                 color: $color-text
@@ -133,5 +133,5 @@
         position: absolute
         width: 100%
         top: 50%
-        transform:translateY(-50%);
+        transform: translateY(-50%);
 </style>

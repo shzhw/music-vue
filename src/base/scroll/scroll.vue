@@ -19,6 +19,10 @@
       data: {
         type: Array,
         default: null
+      },
+      listenScroll: {
+        type: Boolean,
+        default: false
       }
     },
     mounted() {
@@ -27,7 +31,7 @@
       }, 20);
     },
     methods: {
-      _initScroll: function() {
+      _initScroll() {
         if (!this.$refs.wrapper) {
           return;
         }
@@ -35,15 +39,23 @@
           probeType: this.probeType,
           click: this.click
         });
+        if (this.listenScroll) {
+          this.scroll.on('scroll', (pos) => {
+            this.$emit('scroll', pos);
+          });
+        }
       },
-      enable: function() {
+      enable() {
         this.scroll && this.scroll.enable();
       },
-      disable: function() {
+      disable() {
         this.scroll && this.scroll.disable();
       },
-      refresh: function() {
+      refresh() {
         this.scroll && this.scroll.refresh();
+      },
+      scrollToElement() {
+        this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments);
       }
     },
     watch: {
