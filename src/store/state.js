@@ -1,8 +1,16 @@
 /**
  * Created by ww on 2017/9/4.
  */
+import {playMode} from '@/common/js/config';
+
 const state = {
-  singer: {}
+  singer: {},
+  playing: false,
+  fullScreen: false,
+  playList: [],
+  sequenceList: [],
+  mode: playMode.sequence,
+  currentIndex: -1
 };
 
 export default state;
