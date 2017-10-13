@@ -4,7 +4,7 @@
 
 export const commonParamas = {
   g_tk: 514831334,
-  format: 'json',
+  format: 'jsonp',
   inCharset: 'utf-8',
   outCharset: 'utf-8',
   notice: 0

@@ -6,12 +6,15 @@
 
 <script>
   import MusicList from '@/components/music-list/music-list';
-  import {getSingerDetail} from '@/api/singer';
-  import {ERR_OK} from '@/api/config';
   import {mapGetters} from 'vuex';
+  import {getSongList} from '@/api/recommend';
+  import {ERR_OK} from '@/api/config';
   import {createSong} from '@/common/js/song';
 
   export default {
+    created() {
+      this._getSongList();
+    },
     data() {
       return {
         songs: []
@@ -19,42 +22,38 @@
     },
     computed: {
       title() {
-        return this.singer.name;
+        return this.disc.dissname;
       },
       bgImg() {
-        return this.singer.avatar;
+        return this.disc.imgurl;
       },
       ...mapGetters([
-        'singer'
+        'disc'
       ])
     },
-    created() {
-      this._getDetail();
-      console.log(this.singer);
-    },
     methods: {
-      _getDetail() {
-        if (!this.singer.id) {
-          this.$router.push('/singer');
-          return;
+      _getSongList() {
+        if (!this.disc.dissid) {
+          this.$router.push('/recommend');
         }
-        getSingerDetail(this.singer.id)
+        getSongList(this.disc.dissid)
           .then((res) => {
             if (res.code === ERR_OK) {
-              console.log(res.data.list);
-              this.songs = this._normalizeSongs(res.data.list);
+              this.songs = this._normalizeSong(res.cdlist[0].songlist);
             }
+          })
+          .catch(() => {
           });
       },
-      _normalizeSongs(list) {
-        let ret = [];
+      _normalizeSong(list) {
+        let _list = [];
+        console.log(list);
         list.forEach((item) => {
-          let {musicData} = item;
-          if (musicData.songid && musicData.albummid) {
-            ret.push(createSong(musicData));
+          if (item.songid && item.songmid) {
+            _list.push(createSong(item));
           }
         });
-        return ret;
+        return _list;
       }
     },
     components: {

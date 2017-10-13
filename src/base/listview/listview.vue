@@ -80,6 +80,9 @@
       }
     },
     methods: {
+      refresh() {
+        this.$refs.listview.refresh();
+      },
       selectItem(item) {
         this.$emit('select', item);
       },
@@ -210,17 +213,17 @@
               float: left
     .list_shortcut
       width: 20px
-      padding: 20px 0
+      padding: 15px 0
       border-radius: 9px
       position: absolute
       right: 0
-      top: 60px
+      top: 50px
       font-size: 14px
       color: $color-text-d
       text-align: center
       background-color: $color-background-d
       .item
-        height: 18px
+        height: 16px
         line-height: 18px
         &.active
           color: $color-theme

@@ -25,22 +25,76 @@ var app = express()
 var compiler = webpack(webpackConfig)
 
 var apiRoutes = express.Router()
-apiRoutes.get("/getDiscList",function(req,res){
+apiRoutes.get("/getDiscList", function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg';
-  axios.get(url,{
+  axios.get(url, {
     headers: {
-      referer:'https://y.qq.com/portal/playlist.html',
+      referer: 'https://y.qq.com/portal/playlist.html',
       host: 'c.y.qq.com'
     },
     params: req.query
-  }).then((response)=>{
-    res.json(response.data)
-  }).catch((err)=>{
+  }).then((response) => {
+    var ret = response.data;
+    if (typeof ret === 'string') {
+      var reg = /^\w+\(({[^()]+})\)$/;
+      var matches = ret.match(reg);
+      if (matches) {
+        ret = JSON.parse(matches[1]);
+      }
+    }
+    res.json(ret)
+  }).catch((err) => {
     console.log(err);
   })
 })
 
-app.use('/api',apiRoutes)
+apiRoutes.get("/lyric", function (req, res) {
+  var url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg';
+  axios.get(url, {
+    headers: {
+      referer: 'https://y.qq.com/portal/player.html',
+      host: 'c.y.qq.com'
+    },
+    params: req.query
+  }).then((response) => {
+    var ret = response.data;
+    if (typeof ret === 'string') {
+      var reg = /^\w+\(({[^()]+})\)$/;
+      var matches = ret.match(reg);
+      if (matches) {
+        ret = JSON.parse(matches[1]);
+      }
+    }
+    res.json(ret);
+  }).catch((err) => {
+    console.log(err);
+  })
+})
+
+apiRoutes.get("/songlist", function (req, res) {
+  var url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg';
+  axios.get(url, {
+    headers: {
+      referer: 'https://y.qq.com/portal/player.html',
+      host: 'c.y.qq.com'
+    },
+    params: req.query
+  }).then((response) => {
+    var ret = response.data;
+    if (typeof ret === 'string') {
+      var reg = /^\w+\(({[^()]+})\)$/;
+      var matches = ret.match(reg);
+      if (matches) {
+        ret = JSON.parse(matches[1]);
+      }
+    }
+    res.json(ret);
+  }).catch((err) => {
+    console.log(err);
+  })
+})
+
+app.use('/api', apiRoutes)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
@@ -48,12 +102,13 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 })
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {
-  log: () => {}
+  log: () => {
+  }
 })
 // force page reload when html-webpack-plugin template changes
 compiler.plugin('compilation', function (compilation) {
   compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-    hotMiddleware.publish({ action: 'reload' })
+    hotMiddleware.publish({action: 'reload'})
     cb()
   })
 })
@@ -62,7 +117,7 @@ compiler.plugin('compilation', function (compilation) {
 Object.keys(proxyTable).forEach(function (context) {
   var options = proxyTable[context]
   if (typeof options === 'string') {
-    options = { target: options }
+    options = {target: options}
   }
   app.use(proxyMiddleware(options.filter || context, options))
 })

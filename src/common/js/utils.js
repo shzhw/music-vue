@@ -2,15 +2,29 @@
  * Created by ww on 2017/9/8.
  */
 export function shuffle(arr) {
-  for (let i = 0; i < arr.length; i++) {
+  let _arr = arr.slice(); // 防止污染参数
+  for (let i = 0; i < _arr.length; i++) {
     let j = getRandomInt(0, i);
-    let t = arr[i];
-    arr[i] = arr[j];
-    arr[j] = t;
+    let t = _arr[i];
+    _arr[i] = _arr[j];
+    _arr[j] = t;
   }
-  return arr;
+  return _arr;
 }
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+export function debounce(func, delay) {
+  let timer;
+
+  return function(...args) {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
 }

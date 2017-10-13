@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2017-07-08.
  */
-import jsonp from '@/common/js/jsonp.js';
+import jsonp from '@/common/js/jsonp';
 import {commonParamas, options} from './config.js';
 
 export function getSingerList() {

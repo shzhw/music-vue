@@ -33,3 +33,24 @@ export function getDiscList() {
     return Promise.resolve(res.data);
   });
 }
+
+export function getSongList(disstid) {
+  const url = `/api/songlist`;
+  const data = Object.assign({}, commonParamas, {
+    disstid,
+    type: 1,
+    json: 1,
+    utf8: 1,
+    onlysong: 0,
+    g_tk: 1768473683,
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 1,
+    format: 'json'
+  });
+  return axios.get(url, {
+    params: data
+  }).then((res) => {
+    return Promise.resolve(res.data);
+  });
+}
