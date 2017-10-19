@@ -8,6 +8,10 @@ import VueLazyLoad from 'vue-lazyload';
 
 import '@/common/stylus/index.styl';
 
+import VConsole from 'vconsole';
+window.vConsole = new VConsole();
+console.log('test vconsole');
+
 Vue.config.productionTip = false;
 
 Vue.use(VueLazyLoad, {

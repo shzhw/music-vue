@@ -8,14 +8,32 @@
         </div>
       </div>
       <div class="search-box-wrapper">
-        <search-box @query="onQueryChange" placeholder="搜索歌曲"></search-box>
+        <search-box @query="onQueryChange" placeholder="搜索歌曲" ref="searchBox"></search-box>
       </div>
       <div class="shortcut" v-show="!query">
         <switches :switches="switches" :currentIndex="currentIndex" @switch="switchItem"></switches>
+        <div class="list-wrapper">
+          <scroll class="list-scroll" :data="playHistory" v-if="currentIndex === 0" ref="songList" :refreshDelay="refreshDelay">
+            <div class="list-inner">
+              <song-list :songs="playHistory" @select="selectSong"></song-list>
+            </div>
+          </scroll>
+          <scroll class="list-scroll" :data="searchHistory" v-if="currentIndex === 1" ref="searchList" :refreshDelay="refreshDelay">
+            <div class="list-inner">
+              <search-list :searches="searchHistory" @delete="deleteSearchHistory"></search-list>
+            </div>
+          </scroll>
+        </div>
       </div>
       <div class="search-result" v-show="query">
-        <suggest :query="query"  @listScroll="blurInput" :showSinger="showSinger" @select="selectSuggest"></suggest>
+        <suggest :query="query" @listScroll="blurInput" :showSinger="showSinger" @select="selectSuggest"></suggest>
       </div>
+      <top-tip ref="topTip">
+        <div class="tip-title">
+          <i class="icon-ok"></i>
+          <span class="text">一首歌曲已经添加到播放队列</span>
+        </div>
+      </top-tip>
     </div>
   </transition>
 </template>
@@ -24,7 +42,13 @@
   import SearchBox from '@/base/search-box/search-box';
   import Suggest from '@/components/suggest/suggest';
   import Switches from '@/base/switches/switches';
+  import Scroll from '@/base/scroll/scroll';
+  import SongList from '@/base/song-list/song-list';
+  import SearchList from '@/base/search-list/search-list';
+  import TopTip from '@/base/top-tip/top-tip';
+  import {mapGetters, mapActions} from 'vuex';
   import {searchMixin} from '@/common/js/mixin';
+  import Song from '@/common/js/song';
 
   export default {
     mixins: [searchMixin],
@@ -40,24 +64,52 @@
         currentIndex: 0
       };
     },
+    computed: {
+      ...mapGetters([
+        'playHistory',
+        'searchHistory'
+      ])
+    },
     methods: {
       show() {
         this.showFlag = true;
+        setTimeout(() => {
+          this.currentIndex === 0
+            ? this.$refs.songList.refresh()
+            : this.$refs.searchList.refresh();
+        }, 20);
       },
       hide() {
         this.showFlag = false;
       },
       selectSuggest() {
         this.saveSearch();
+        this.showTip();
       },
       switchItem(index) {
         this.currentIndex = index;
-      }
+      },
+      selectSong(song, index) {
+        if (index !== 0) {
+          this.insertSong(new Song(song));
+          this.showTip();
+        }
+      },
+      showTip() {
+        this.$refs.topTip.show();
+      },
+      ...mapActions([
+        'insertSong'
+      ])
     },
     components: {
       SearchBox,
       Suggest,
-      Switches
+      Switches,
+      Scroll,
+      SongList,
+      SearchList,
+      TopTip
     }
   };
 </script>

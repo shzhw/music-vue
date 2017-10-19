@@ -1,12 +1,46 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Recommed from '@/components/recommed/recommed';
-import Singer from '@/components/singer/singer';
-import Rank from '@/components/rank/rank';
-import Search from '@/components/search/search';
-import SingerDetail from '@/components/singer-detail/singer-detail';
-import Disc from '@/components/disc/disc';
-import topList from '@/components/top-list/top-list';
+const Recommed = (resolve) => {
+  import('@/components/recommed/recommed').then((recommed) => {
+    resolve(recommed);
+  });
+};
+
+const Singer = (resolve) => {
+  import('@/components/singer/singer').then((singer) => {
+    resolve(singer);
+  });
+};
+const Rank = (resolve) => {
+  import('@/components/rank/rank').then((rank) => {
+    resolve(rank);
+  });
+};
+const Search = (resolve) => {
+  import('@/components/search/search').then((search) => {
+    resolve(search);
+  });
+};
+const SingerDetail = (resolve) => {
+  import('@/components/singer-detail/singer-detail').then((singerDetail) => {
+    resolve(singerDetail);
+  });
+};
+const Disc = (resolve) => {
+  import('@/components/disc/disc').then((disc) => {
+    resolve(disc);
+  });
+};
+const TopList = (resolve) => {
+  import('@/components/disc/disc').then((toplist) => {
+    resolve(toplist);
+  });
+};
+const UserContent = (resolve) => {
+  import('@/components/user-content/user-content').then((userContent) => {
+    resolve(userContent);
+  });
+};
 
 Vue.use(Router);
 
@@ -40,7 +74,7 @@ export default new Router({
       children: [
         {
           path: ':id',
-          component: topList
+          component: TopList
         }
       ]
     },
@@ -53,6 +87,10 @@ export default new Router({
           component: SingerDetail
         }
       ]
+    },
+    {
+      path: '/user',
+      component: UserContent
     }
   ],
   linkActiveClass: 'active'

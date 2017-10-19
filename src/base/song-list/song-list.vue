@@ -1,7 +1,7 @@
 <template>
   <div class="song-list">
-    <ul>
-      <li class="item" v-for="(song,index) in songs" @click="selectItem(song,index)">
+    <transition-group name="list" tag="ul">
+      <li :key="song" class="item" v-for="(song,index) in songs" @click="selectItem(song,index)">
         <div class="rank" v-show="rank">
           <span :class="getRankCla(index)">{{getRankText(index)}}</span>
         </div>
@@ -10,7 +10,7 @@
           <p class="desc">{{getDesc(song)}}</p>
         </div>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -56,6 +56,10 @@
   @import "../../common/stylus/mixin"
 
   .song-list
+    .list-enter-active, &.list-leave-active
+      transition: all 0.1s
+    .list-enter, &.list-leave-to
+      height: 0
     .item
       display: flex
       align-items: center
