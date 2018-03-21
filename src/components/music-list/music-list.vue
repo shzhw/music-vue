@@ -155,7 +155,7 @@
     left: 0
     bottom: 0
     right: 0
-    background: $color-background
+    background: $color-theme-background
     .back
       position absolute
       top: 0
@@ -195,8 +195,8 @@
           padding: 7px 0
           margin: 0 auto
           text-align: center
-          border: 1px solid $color-theme
-          color: $color-theme
+          background-color: $color-theme
+          color: $color-text
           border-radius: 100px
           font-size: 0
           .icon-play
@@ -218,16 +218,16 @@
     .bg-layer
       position: relative
       height: 100%
-      background: $color-background
+      background: $color-theme-background
     .list
       position: fixed
       top: 0
       bottom: 0
       width: 100%
-      background: $color-background
+      background: $color-theme-background
       .song-list-wrapper
         padding: 20px 30px
-      /*background: $color-background*/
+      /*background: $color-theme-background*/
       .loading-container
         position: absolute
         width: 100%

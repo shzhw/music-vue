@@ -124,7 +124,7 @@
     bottom: 0
     width: 100%
     z-index: 200
-    background: $color-background
+    background: $color-theme-background
     &.slide-enter-active, &.slide-leave-active
       transition: all 0.3s
     &.slide-enter, &.slide-leave-to

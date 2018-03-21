@@ -4,7 +4,7 @@
       <div>
         <div v-if="sliderData.length" class="slider_wrapper">
           <slider>
-            <div v-for="item in sliderData">
+            <div v-for="(item,i) in sliderData" :key="i">
               <a :href="item.linkUrl">
                 <img @load="imgOnload" :src="item.picUrl" alt="">
               </a>
@@ -14,7 +14,7 @@
         <div class="recommed_list">
           <h2 class="list_title">热门歌单推荐</h2>
           <ul>
-            <li class="item" v-for="item in discList" @click="selectItem(item)">
+            <li class="item" v-for="(item,index) in discList" @click="selectItem(item)" :key="index">
               <div class="icon">
                 <img v-lazy="item.imgurl" alt="" width="60" height="60"/>
               </div>
@@ -125,6 +125,7 @@
           font-size: $font-size-medium
           text-align: center;
           color: $color-theme
+          font-weight: bold
         ul
           padding: 0 15px
           .item

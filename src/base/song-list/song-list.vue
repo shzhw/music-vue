@@ -1,7 +1,7 @@
 <template>
   <div class="song-list">
     <transition-group name="list" tag="ul">
-      <li :key="song" class="item" v-for="(song,index) in songs" @click="selectItem(song,index)">
+      <li :key="index" class="item" v-for="(song,index) in songs" @click="selectItem(song,index)">
         <div class="rank" v-show="rank">
           <span :class="getRankCla(index)">{{getRankText(index)}}</span>
         </div>

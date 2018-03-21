@@ -9,7 +9,7 @@
           <div class="hot-key">
             <h2 class="title">热门搜索</h2>
             <ul>
-              <li class="item" v-for="item in hotKey" @click="addQuery(item.k)">
+              <li class="item" v-for="(item,index) in hotKey" @click="addQuery(item.k)" :key="index">
                 <span>{{item.k}}</span>
               </li>
             </ul>
@@ -132,12 +132,15 @@
             color: $color-text-l
           .item
             display: inline-block
-            padding: 5px 10px
+            padding: 8px 15px
             margin: 0 20px 10px 0
             border-radius: 6px
             background: $color-highlight-background
             font-size: $font-size-medium
             color: $color-text-d
+            &:first-child
+              color: $color-theme
+              font-weight: bold
         .search-history
           position: relative
           margin: 0 20px

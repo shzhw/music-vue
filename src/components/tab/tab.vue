@@ -36,4 +36,5 @@
         .tab-link
           color: $color-theme
           border-bottom: 2px solid $color-theme
+          font-weight: bold
 </style>

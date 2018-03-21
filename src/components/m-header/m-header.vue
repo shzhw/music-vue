@@ -1,7 +1,7 @@
 <template>
   <div class="m-header">
     <div class="icon"></div>
-    <h1 class="text">Chicken Music</h1>
+    <h1 class="text">Music</h1>
     <router-link to="/user" class="mine" tag="div">
       <i class="icon-mine"></i>
     </router-link>
@@ -20,8 +20,11 @@
 
   .m-header
     height: 44px
-    text-align: center
+    text-align: left
     font-size: 0
+    background-color: $color-bakcground-header
+    color: $color-text-header 
+    padding-left: 15px
     .icon
       display: inline-block
       vertical-align: top
@@ -43,5 +46,5 @@
         display: block
         padding: 12px
         font-size: 20px
-        color: $color-theme
+        color: $color-icon-header
 </style>

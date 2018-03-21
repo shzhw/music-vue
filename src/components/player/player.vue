@@ -39,6 +39,7 @@
                    :class="{'current':index===currentLineNum}"
                    ref="lyricLine"
                    v-for="(line,index) in currentLyric.lines"
+                   :key="index"
                 >
                   {{line.txt}}
                 </p>
@@ -427,7 +428,7 @@
       top: 0
       bottom: 0
       z-index: 150
-      background: $color-background
+      background: $color-theme-background
       .background
         position: absolute
         left: 0

@@ -2,12 +2,12 @@
   <div class="rank" ref="rank">
     <scroll class="toplist" :data="topList" ref="topList">
       <ul>
-        <li class="item" v-for="item in topList" @click="selectItem(item)">
+        <li class="item" v-for="(item,i) in topList" @click="selectItem(item)" :key="i">
           <div class="icon">
             <img alt="" width="100" height="100" v-lazy="item.picUrl">
           </div>
           <ul class="songlist">
-            <li class="song" v-for="(song,index) in item.songList">
+            <li class="song" v-for="(song,index) in item.songList" :key="index">
               <span>{{index + 1}}</span>
               <span>{{`${song.songname}-${song.singername}`}}</span>
             </li>
