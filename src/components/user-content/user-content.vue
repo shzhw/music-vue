@@ -1,13 +1,10 @@
 <template>
-  <transition name="slide">
+  <slide-layer>
     <div class="user-center">
-      <div class="back" @click="back">
-        <i class="icon-back"></i>
-      </div>
       <div class="switches-wrapper">
         <switches :switches="switches" :currentIndex="currentIndex" @switch="switchItem"></switches>
       </div>
-      <div ref="playBtn" class="play-btn" @click="random">
+      <div ref="playBtn" class="play-btn" @click="random" v-show="!noResult">
         <i class="icon-play"></i>
         <span class="text">随机播放全部</span>
       </div>
@@ -27,7 +24,7 @@
         <no-result :title="noResultDesc"></no-result>
       </div>
     </div>
-  </transition>
+  </slide-layer>
 </template>
 
 <script type="text/ecmascript-6">
@@ -35,6 +32,7 @@
   import Scroll from '@/base/scroll/scroll';
   import SongList from '@/base/song-list/song-list';
   import NoResult from '@/base/no-result/no-result';
+  import SlideLayer from '@/base/slide-layer/slide-layer';
   import {mapGetters, mapActions} from 'vuex';
   import Song from '@/common/js/song';
   import {playlistMixin} from '@/common/js/mixin';
@@ -85,9 +83,6 @@
           this.insertSong(new Song(song));
         }
       },
-      back() {
-        this.$router.back();
-      },
       random() {
         let list = this.currentIndex === 0
           ? this.favoriteList
@@ -107,35 +102,15 @@
       Switches,
       Scroll,
       SongList,
-      NoResult
+      NoResult,
+      SlideLayer
     }
   };
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/variable"
-
   .user-center
-    position: fixed
-    top: 0
-    bottom: 0
-    z-index: 100
-    width: 100%
-    background: $color-theme-background
-    &.slide-enter-active, &.slide-leave-active
-      transition: all 0.3s
-    &.slide-enter, &.slide-leave-to
-      transform: translate3d(100%, 0, 0)
-    .back
-      position absolute
-      top: 0
-      left: 6px
-      z-index: 50
-      .icon-back
-        display: block
-        padding: 10px
-        font-size: $font-size-large-x
-        color: $color-theme
     .switches-wrapper
       margin: 10px 0 30px 0
     .play-btn
