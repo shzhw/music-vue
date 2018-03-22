@@ -4,12 +4,12 @@
       <router-link class="register_btn" tag="a" to="/register">注册</router-link>
       <ul class="login_inner">
         <li class="username">
-          <input type="text" placeholder="请输入用户名">
+          <input type="text" placeholder="请输入用户名" autocomplete="off">
           <div class="text_box">
             <span class="text">用户名密码不正确</span>
           </div>
         <li class="password">
-          <input type="password" class="pswd" placeholder="请输入密码">
+          <input type="password" class="pswd" placeholder="请输入密码" autocomplete="off">
         </li>
         <li class="login_btn_box">
           <router-link class="login_btn" tag="button" to="/api/login_post">登陆</router-link>

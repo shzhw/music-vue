@@ -2,16 +2,20 @@
   <slide-layer>
     <div class="register_box">
       <ul class="register_inner">
-        <li>
-          <input type="text" placeholder="请输入用户名">
+        <li class="input_box">
+          <input type="text" placeholder="请输入用户名" autocomplete="off">
         </li>
-        <li>
-          <input type="text" placeholder="密码">
+        <li class="input_box">
+          <input type="text" placeholder="密码" autocomplete="off">
         </li>
-        <li>
-          <input type="text" placeholder="确认密码">
+        <li class="input_box">
+          <input type="text" placeholder="确认密码" autocomplete="off">
         </li>
-        <li class="not_cm_li">
+         <li class="not_cm_li v_code_box">
+          <input type="text">
+          <div class="v_code_img"></div>
+        </li>
+        <li class="agreement_box">
             <input type="checkbox" class="agreement_ck" id="agreement_ck">
             <label class="agreement" for="agreement_ck">阅读并接受<a href="javascript:;">《用户协议》</a>及<a href="javascript:;">《隐私权保护声明》</a></label>
         </li>
@@ -60,27 +64,46 @@ export default {
        >li
         width: 100%
         margin-bottom: 15px
-        &:not(.not_cm_li)
+        >input
+          line-height: 35px
+          height 35px
+          padding:0 10px
+          box-sizing:border-box
+          border: none
+        &.input_box
           >input
             display: block
             width 100%
-            line-height: 35px
-            height 35px
-            padding:0 10px
-            box-sizing:border-box
-            border: none
           .text_box
             line-height: 30px
             color: $color-theme
             font-style: italic
             font-size: 14px
             margin-bottom: 10px
+        &.v_code_box
+          display: flex
+          input
+            flex: 0 0 150px
+            width: 150px
+          .v_code_img
+            flex: 1
+            margin-left: 30px
+            background-color: #ccc
+        &.agreement_box
+          display: flex
+          height: 18px
+          line-height 18px
+          input
+            flex: 0 0 15px
+            height: 100%
+          .agreement
+            flex: 1    
         .agreement
           font-size: 12px
           a
             color: $color-theme
         .register_btn
-          margin-top: 30px
+          margin-top: 12px
           width: 100%
           height: 100%
           line-height: 35px
