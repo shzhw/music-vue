@@ -1,12 +1,13 @@
 /**
  * Created by ww on 2017/9/5.
  */
-import {getLyric} from '@/api/song';
-import {ERR_OK} from '@/api/config';
+import { getLyric } from '@/api/song';
+import { getSongVKey } from '@/api/getSongVKey';
+import { ERR_OK } from '@/api/config';
 import Base64 from 'js-base64';
 
 export default class Song {
-  constructor({id, mid, singer, name, album, duration, image, url}) {
+  constructor({ id, mid, singer, name, album, duration, image, url }) {
     this.id = id;
     this.mid = mid;
     this.singer = singer;
@@ -22,7 +23,7 @@ export default class Song {
       return Promise.resolve(this.lyric);
     }
     return new Promise((resolve, reject) => {
-      getLyric(this.mid).then((res) => {
+      getLyric(this.mid).then(res => {
         if (res.retcode === ERR_OK) {
           this.lyric = Base64.decode(res.lyric);
           resolve(this.lyric);
@@ -32,6 +33,22 @@ export default class Song {
         }
       });
     });
+  }
+  getVKey() {
+    if (this.vkey) {
+      return Promise.resolve(this.vkey);
+    } else {
+      return new Promise((resolve, reject) => {
+        getSongVKey(this.mid).then(res => {
+          if (res.retcode === ERR_OK) {
+            this.vkey = res.data.items[0].vkey;
+            resolve(this.vkey);
+          } else {
+            reject('no vkey');
+          }
+        });
+      });
+    }
   }
 }
 
@@ -43,8 +60,12 @@ export function createSong(musicData) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
-    image: `//y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
-    url: `http://isure.stream.qqmusic.qq.com/C100${musicData.songmid}.m4a?fromtag=46`
+    image: `//y.gtimg.cn/music/photo_new/T002R300x300M000${
+      musicData.albummid
+    }.jpg?max_age=2592000`
+    // url: `http://isure.stream.qqmusic.qq.com/c400${
+    //   musicData.songmid
+    // }.m4a?fromtag=46`
   });
 }
 
@@ -53,7 +74,7 @@ function filterSinger(singer) {
   if (!singer) {
     return '';
   }
-  singer.forEach((s) => {
+  singer.forEach(s => {
     ret.push(s.name);
   });
   return ret.join('/');

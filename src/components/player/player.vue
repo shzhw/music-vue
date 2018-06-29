@@ -398,6 +398,7 @@
         this.timer = setTimeout(() => {
           this.$refs.audio.play();
           this.getLyric();
+          console.log(this.vkey);
         }, 1000);
       },
       playing() {
