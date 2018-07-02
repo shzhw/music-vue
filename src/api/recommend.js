@@ -27,11 +27,12 @@ export function getDiscList() {
     categoryId: 10000000,
     rnd: Math.random()
   });
-  return axios.get(url, {
-    params: data
-  }).then((res) => {
-    return Promise.resolve(res.data);
-  });
+  return axios
+    .get(url, { params: data })
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(e => { return Promise.reject(e); });
 }
 
 export function getSongList(disstid) {
@@ -48,9 +49,12 @@ export function getSongList(disstid) {
     needNewCode: 1,
     format: 'json'
   });
-  return axios.get(url, {
-    params: data
-  }).then((res) => {
-    return Promise.resolve(res.data);
-  });
+  return axios
+    .get(url, { params: data })
+    .then(res => {
+      return Promise.resolve(res.data);
+    })
+    .catch(e => {
+      return Promise.reject(e);
+    });
 }

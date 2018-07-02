@@ -45,7 +45,7 @@
             if (res.code === ERR_OK) {
 //              console.log(res.songlist);
               this.songs = this._normalizeSongs(res.songlist);
-              console.log(this.songs);
+              // console.log(this.songs);
             }
           })
           .catch(() => {

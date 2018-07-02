@@ -47,7 +47,7 @@
       },
       _normalizeSong(list) {
         let _list = [];
-        console.log(list);
+        // console.log(list);
         list.forEach((item) => {
           if (item.songid && item.songmid) {
             _list.push(createSong(item));

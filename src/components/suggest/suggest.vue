@@ -113,7 +113,7 @@
             id: item.singermid,
             name: item.singername
           });
-          console.log(singer.id);
+          // console.log(singer.id);
           this.$router.push({
             path: `search/${singer.id}`
           });

@@ -64,7 +64,7 @@
         this.$router.push({
           path: `/recommend/${item.dissid}`
         });
-        console.log(item);
+        // console.log(item);
         this.setDisc(item);
       },
       handlePlayList(playList) {
@@ -77,14 +77,14 @@
           if (res.code === ERR_OK) {
             this.sliderData = res.data.slider;
           }
-        });
+        }).catch((e) => {});
       },
       _getDiscList() {
         getDiscList().then((res) => {
           if (res.code === ERR_OK) {
             this.discList = res.data.list;
           }
-        });
+        }).catch((e) => {});
       },
       imgOnload() {
         if (this.checkLoaded) {

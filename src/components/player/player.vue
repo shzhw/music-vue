@@ -286,7 +286,7 @@ export default {
             this.timer = setTimeout(() => {
               this.$refs.audio.play();
             }, 1000);
-          });
+          }).catch((e) => {});
         }
       });
     },
