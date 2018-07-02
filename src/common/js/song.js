@@ -7,7 +7,7 @@ import { ERR_OK } from '@/api/config';
 import Base64 from 'js-base64';
 
 export default class Song {
-  constructor({ id, mid, singer, name, album, duration, image, url }) {
+  constructor({ id, mid, singer, name, album, duration, image }) {
     this.id = id;
     this.mid = mid;
     this.singer = singer;
@@ -15,7 +15,6 @@ export default class Song {
     this.album = album;
     this.duration = duration;
     this.image = image;
-    this.url = url;
   }
 
   getLyric() {
@@ -40,8 +39,9 @@ export default class Song {
     } else {
       return new Promise((resolve, reject) => {
         getSongVKey(this.mid).then(res => {
-          if (res.retcode === ERR_OK) {
+          if (res.code === ERR_OK) {
             this.vkey = res.data.items[0].vkey;
+            this.url = `http://dl.stream.qqmusic.qq.com/C400${this.mid}.m4a?guid=4216154655&vkey=${this.vkey}&uin=0&fromtag=38`;
             resolve(this.vkey);
           } else {
             reject('no vkey');

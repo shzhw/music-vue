@@ -1,28 +1,30 @@
 <template>
   <slide-layer>
     <div class="register_box">
-      <ul class="register_inner">
-        <li class="input_box">
-          <input type="text" placeholder="请输入用户名" autocomplete="off">
-        </li>
-        <li class="input_box">
-          <input type="text" placeholder="密码" autocomplete="off">
-        </li>
-        <li class="input_box">
-          <input type="text" placeholder="确认密码" autocomplete="off">
-        </li>
-         <li class="not_cm_li v_code_box">
-          <input type="text">
-          <div class="v_code_img"></div>
-        </li>
-        <li class="agreement_box">
-            <input type="checkbox" class="agreement_ck" id="agreement_ck">
-            <label class="agreement" for="agreement_ck">阅读并接受<a href="javascript:;">《用户协议》</a>及<a href="javascript:;">《隐私权保护声明》</a></label>
-        </li>
-        <li>
-          <router-link class="register_btn" tag="button" to="/api/register_post">提交</router-link>
-        </li>
-      </ul>
+      <form action="/api/register_post" @submit.prevent="register">
+        <ul class="register_inner">
+          <li class="input_box">
+            <input type="text" placeholder="请输入用户名" autocomplete="off">
+          </li>
+          <li class="input_box">
+            <input type="text" placeholder="密码" autocomplete="off">
+          </li>
+          <li class="input_box">
+            <input type="text" placeholder="确认密码" autocomplete="off">
+          </li>
+          <li class="not_cm_li v_code_box">
+            <input type="text">
+            <div class="v_code_img"></div>
+          </li>
+          <li class="agreement_box">
+              <input type="checkbox" class="agreement_ck" id="agreement_ck">
+              <label class="agreement" for="agreement_ck">阅读并接受<a href="javascript:;">《用户协议》</a>及<a href="javascript:;">《隐私权保护声明》</a></label>
+          </li>
+          <li>
+            <button class="register_btn" type="submit">提交</button>
+          </li>
+        </ul>
+      </form>
     </div>
   </slide-layer>
 </template>
@@ -38,6 +40,9 @@ export default {
   computed: {
   },
   methods: {
+    register() {
+      alert('未开放');
+    }
   },
   components: {
     SlideLayer
