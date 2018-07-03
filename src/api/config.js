@@ -16,4 +16,4 @@ export const options = {
 
 export const ERR_OK = 0;
 
-export const proxyUrl = 'http://m6jb5x.natappfree.cc';
+export const proxyUrl = '';
