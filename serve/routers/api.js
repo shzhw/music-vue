@@ -50,7 +50,8 @@ apiRoutes.get('/songlist', function(req, res) {
       params: req.query
     })
     .then(response => {
-      res.send(response.data);
+      // 这个请求会将cbk的开头__去掉，原因未知
+      res.send('__' + response.data);
     })
     .catch(err => {
       console.log(err);
