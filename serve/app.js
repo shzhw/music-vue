@@ -2,7 +2,6 @@
  * Created by ww on 2017/10/18.
  */
 var express = require('express');
-var axios = require('axios');
 var api = require('./routers/api');
 var ejs = require('ejs');
 
