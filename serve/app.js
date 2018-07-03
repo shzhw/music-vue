@@ -17,12 +17,12 @@ app.use('/static', express.static('./dist/static'));
 
 app.use('/api', api);
 
-var port = 8022;
+var port = 80;
 
 app.listen(port, function(err) {
   if (err) {
     console.log(err);
     return;
   }
-  console.log('listen at http://localhost:' + port + '\n');
+  console.log('listen at http://localhost:' + port);
 });
