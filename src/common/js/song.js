@@ -39,7 +39,7 @@ export default class Song {
   }
   getVKey() {
     if (this.vkey) {
-      return Promise.resolve(this.vkey);
+      return Promise.resolve();
     } else {
       return new Promise((resolve, reject) => {
         getSongVKey(this.mid)
@@ -49,7 +49,7 @@ export default class Song {
               this.url = `http://dl.stream.qqmusic.qq.com/C400${
                 this.mid
               }.m4a?guid=4216154655&vkey=${this.vkey}&uin=0&fromtag=38`;
-              resolve(this.vkey);
+              resolve();
             } else {
               reject('no vkey');
             }

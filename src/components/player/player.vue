@@ -282,10 +282,10 @@ export default {
           this.$refs.audio.play();
         } else {
           this.currentSong.getVKey().then(() => {
-            clearTimeout(this.timer);
-            this.timer = setTimeout(() => {
+            clearTimeout(this.timer1);
+            this.timer1 = setTimeout(() => {
               this.$refs.audio.play();
-            }, 1000);
+            }, 500);
           }).catch((e) => {});
         }
       });
@@ -404,14 +404,11 @@ export default {
       if (!newSong.id) return;
       if (newSong.id === oldSong.id) return;
       if (this.currentLyric) this.currentLyric.stop();
-      this.getLyric();
-      this.play();
-      // clearTimeout(this.timer);
-      // this.timer = setTimeout(() => {
-      //   // this.$refs.audio.play();
-      //   this.play();
-      //   this.getLyric();
-      // }, 1000);
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.play();
+        this.getLyric();
+      }, 1000);
     },
     playing() {
       const audio = this.$refs.audio;
