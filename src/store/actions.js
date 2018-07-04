@@ -117,10 +117,11 @@ export const deleteSongList = ({commit}) => {
 export const savePlayHistory = ({commit}, song) => {
   commit(types.SET_PLAY_HISTORY, savePlay(song));
 };
-
+// 收藏-save
 export const saveFavoriteList = ({commit}, song) => {
   commit(types.SET_FAVORITE_LIST, saveFavorite(song));
 };
+// 收藏-del
 export const deleteFavoriteList = ({commit}, song) => {
   commit(types.SET_FAVORITE_LIST, deleteFavorite(song));
 };
