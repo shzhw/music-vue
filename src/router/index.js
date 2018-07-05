@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+
+// import Users from '@/api/Users';
+
 const Recommed = resolve => {
   import('@/components/recommed/recommed').then(recommed => {
     resolve(recommed);
@@ -56,7 +59,7 @@ const Register = resolve => {
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -104,7 +107,10 @@ export default new Router({
     },
     {
       path: '/userinfo',
-      component: UserContent
+      component: UserContent,
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/login',
@@ -117,3 +123,19 @@ export default new Router({
   ],
   linkActiveClass: 'active'
 });
+
+router.beforeEach((to, from, next) => {
+  let info = router.app.$store.state.userinfo;
+  if (to.matched.some(res => res.meta.requireAuth)) {
+    // 判断是否需要登录权限
+    if (info) {
+      next();
+    } else {
+      next({ path: '/login', query: { redirect: to.fullPath } });
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

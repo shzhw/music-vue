@@ -9,6 +9,7 @@ const PLAY_KEY = '__play__';
 const PLAY_MAX_LENGTH = 200;
 const FAVORITE_KEY = '__favorite__';
 const FAVORITE_MAX_LENGTH = 200;
+const USERINFO_KEY = 'bmob';
 
 function insertArray(arr, val, compare, maxLen) {
   let index = arr.findIndex(compare);
@@ -31,9 +32,14 @@ function deleteFromArray(arr, compare) {
 
 export function saveSearch(query) {
   let searches = storage.get(SEARCH_KEY, []);
-  insertArray(searches, query, (item) => {
-    return item === query;
-  }, SEARCH_MAX_LENGTH);
+  insertArray(
+    searches,
+    query,
+    item => {
+      return item === query;
+    },
+    SEARCH_MAX_LENGTH
+  );
   storage.set(SEARCH_KEY, searches);
   return searches;
 }
@@ -44,7 +50,7 @@ export function loadSearch() {
 
 export function deleteSearch(query) {
   let searches = storage.get(SEARCH_KEY, []);
-  deleteFromArray(searches, (item) => {
+  deleteFromArray(searches, item => {
     return item === query;
   });
   storage.set(SEARCH_KEY, searches);
@@ -58,9 +64,14 @@ export function clearSearch() {
 
 export function savePlay(song) {
   let songs = storage.get(PLAY_KEY, []);
-  insertArray(songs, song, (item) => {
-    return item.id === song.id;
-  }, PLAY_MAX_LENGTH);
+  insertArray(
+    songs,
+    song,
+    item => {
+      return item.id === song.id;
+    },
+    PLAY_MAX_LENGTH
+  );
   storage.set(PLAY_KEY, songs);
   return songs;
 }
@@ -71,16 +82,21 @@ export function loadPlay() {
 
 export function saveFavorite(song) {
   let songs = storage.get(FAVORITE_KEY, []);
-  insertArray(songs, song, (item) => {
-    return item.id === song.id;
-  }, FAVORITE_MAX_LENGTH);
+  insertArray(
+    songs,
+    song,
+    item => {
+      return item.id === song.id;
+    },
+    FAVORITE_MAX_LENGTH
+  );
   storage.set(FAVORITE_KEY, songs);
   return songs;
 }
 
 export function deleteFavorite(song) {
   let songs = storage.get(FAVORITE_KEY, []);
-  deleteFromArray(songs, (item) => {
+  deleteFromArray(songs, item => {
     return item.id === song.id;
   });
   storage.set(FAVORITE_KEY, songs);
@@ -89,4 +105,8 @@ export function deleteFavorite(song) {
 
 export function loadFavorite() {
   return storage.get(FAVORITE_KEY, []);
+}
+
+export function clearUserInfo() {
+  return storage.set(USERINFO_KEY, '');
 }

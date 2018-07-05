@@ -1,5 +1,5 @@
 <template>
-   <slide-layer>
+   <slide-layer ref="slideLayer">
     <div class="login_box">
       <router-link class="register_btn" tag="a" to="/register">注册</router-link>
       <form action="/api/login_post" @submit.prevent="login">
@@ -23,7 +23,8 @@
 
 <script type="text/ecmascript-6">
 import SlideLayer from '@/base/slide-layer/slide-layer';
-import {mapMutations} from 'vuex';
+import Users from '@/api/Users';
+import { mapMutations } from 'vuex';
 
 export default {
   data() {
@@ -36,26 +37,40 @@ export default {
   computed: {},
   methods: {
     login() {
-      if (this.username === 'user111' && this.userpwd === '123456') {
-        this.errorMessage = null;
-        this.setUserinfo({
-          username: this.username
-        });
-        this.$router.push('/recommend');
-      } else if (this.username.trim() === '') {
+      this.$refs.slideLayer.requestStart();
+      if (this.username.trim() === '' || this.userpwd.trim() === '') {
         this.errorMessage = {
-          text: '用户名不能为空',
+          text: '用户名密码不能为空',
           code: 1
         };
-      } else {
-        this.errorMessage = {
-          text: '用户名密码不正确',
-          code: 2
-        };
       }
+      Users.login({
+        username: this.username,
+        password: this.userpwd
+      })
+        .then(() => {
+          this.setInfo(Users.getUserinfo());
+          this.$refs.slideLayer.requestEnd();
+          this.$router.push('/recommend');
+        })
+        .catch(err => {
+          if (err) {
+            this.alert({
+              text: '登陆失败',
+              isShow: false
+            });
+          }
+          this.userpwd = '';
+          this.errorMessage = {
+            text: '用户名或密码不正确',
+            code: 2
+          };
+          this.$refs.slideLayer.requestEnd();
+        });
     },
     ...mapMutations({
-      setUserinfo: 'SET_USERINFO'
+      setInfo: 'SET_USERINFO',
+      alert: 'SET_ALERT'
     })
   },
   components: {

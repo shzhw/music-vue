@@ -17,7 +17,12 @@ const state = {
   searchHistory: loadSearch(),
   playHistory: loadPlay(),
   favoriteList: loadFavorite(),
-  userinfo: null
+  userinfo: null,
+  alert: {
+    text: '',
+    isShow: false,
+    hidecbk: null
+  }
 };
 
 export default state;

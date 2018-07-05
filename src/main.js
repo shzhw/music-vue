@@ -5,6 +5,7 @@ import store from './store';
 import router from './router';
 import fastclick from 'fastclick';
 import VueLazyLoad from 'vue-lazyload';
+import './common/js/bmob-key';
 
 import '@/common/stylus/index.styl';
 

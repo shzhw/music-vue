@@ -41,7 +41,10 @@ const mutations = {
     state.favoriteList = list;
   },
   [types.SET_USERINFO](state, info) {
-    state.userinfo = Object.assign({}, state.userinfo, info);
+    state.userinfo = info;
+  },
+  [types.SET_ALERT](state, alert) {
+    state.alert = alert;
   }
 };
 

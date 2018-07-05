@@ -16,7 +16,7 @@
   };
 </script>
 
-<style scoped lang=stylus>
+<style scoped lang="stylus">
   @import '../../common/stylus/variable.styl'
   .loading
     width: 100%

@@ -3,6 +3,9 @@
     <div class="user-center">
       <div class="switches-wrapper">
         <switches :switches="switches" :currentIndex="currentIndex" @switch="switchItem"></switches>
+        <div class="logout_wrap" @click="loginout">
+          <i class="icon-power-off"></i><span class="text">注销</span>
+        </div>
       </div>
       <div ref="playBtn" class="play-btn" @click="random" v-show="!noResult">
         <i class="icon-play"></i>
@@ -33,9 +36,10 @@
   import SongList from '@/base/song-list/song-list';
   import NoResult from '@/base/no-result/no-result';
   import SlideLayer from '@/base/slide-layer/slide-layer';
-  import {mapGetters, mapActions} from 'vuex';
+  import {mapGetters, mapActions, mapMutations} from 'vuex';
   import Song from '@/common/js/song';
   import {playlistMixin} from '@/common/js/mixin';
+  import {clearUserInfo} from '@/common/js/cache';
 
   export default {
     mixins: [playlistMixin],
@@ -93,10 +97,18 @@
         });
         this.randomPlay({list});
       },
+      loginout() {
+        this.setUserinfo(null);
+        clearUserInfo();
+        this.$router.push('/recommend');
+      },
       ...mapActions([
         'insertSong',
         'randomPlay'
-      ])
+      ]),
+      ...mapMutations({
+        setUserinfo: 'SET_USERINFO'
+      })
     },
     components: {
       Switches,
@@ -113,6 +125,16 @@
   .user-center
     .switches-wrapper
       margin: 10px 0 30px 0
+      position: relative
+    .logout_wrap
+      position: absolute 
+      right: 10px
+      top: 10px
+      font-size: 18px
+      line-height: 20px
+      .text
+        margin-left: 5px
+        font-size: 12px
     .play-btn
       box-sizing: border-box
       width: 135px

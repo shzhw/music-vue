@@ -51,7 +51,7 @@ export default {
     top: 0
     right: 0
     .icon-mine
-      display block
+      display: block
       padding: 12px
       font-size: 20px
       color: $color-icon-header
@@ -61,27 +61,27 @@ export default {
     right: 0
     .avatar
       float: left
-      width 30px
-      height 30px
+      width: 30px
+      height: 30px
       margin: 7px 0 0
       border-radius: 50%
       overflow: hidden
-      img 
-        width 100%
-        height 100%
+      img
+        width: 100%
+        height: 100%
     .icon-mine
       float: left
       padding: 8px
       font-size: 18px
       margin-top: 5px
-      color: $color-icon-header    
+      color: $color-icon-header
     .name
       float: left
       font-size: 14px
       line-height: 44px
       margin-right: 10px
       max-width: 50px
-      overflow hidden
-      text-overflow: ellipsis 
-      white-space: nowrap 
+      overflow: hidden
+      text-overflow: ellipsis
+      white-space: nowrap
 </style>
