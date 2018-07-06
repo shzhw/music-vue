@@ -7,7 +7,7 @@
     <router-link to="/userinfo" class="mine" tag="div" v-else>
       <i class="avatar" v-if="userinfo.avatar"><img :src="userinfo.avatar" alt=""></i>
       <i class="icon-mine" v-else></i>
-      <span class="name">{{userinfo.username}}</span>
+      <span class="name">{{userinfo.nickname?userinfo.nickname:userinfo.username}}</span>
     </router-link>
   </div>
 </template>
