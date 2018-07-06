@@ -16,4 +16,4 @@ export const options = {
 
 export const ERR_OK = 0;
 
-export const proxyUrl = '';
+export const proxyUrl = 'http://dhe2vi.natappfree.cc';

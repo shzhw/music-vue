@@ -46,10 +46,10 @@
   import Scroll from '@/base/scroll/scroll';
   import Confirm from '@/base/confirm/confirm';
   import AddSong from '@/components/add-song/add-song';
-  import {playerMixin} from '@/common/js/mixin';
+  import {playerMixin, appbackMixin} from '@/common/js/mixin';
 
   export default {
-    mixins: [playerMixin],
+    mixins: [playerMixin, appbackMixin],
     data() {
       return {
         showFlag: false,

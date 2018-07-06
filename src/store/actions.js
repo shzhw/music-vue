@@ -2,17 +2,23 @@
  * Created by ww on 2017/9/4.
  */
 import * as types from './mutation_types';
-import {shuffle} from '@/common/js/utils';
-import {playMode} from '@/common/js/config';
-import {saveSearch, deleteSearch, clearSearch, savePlay, saveFavorite, deleteFavorite} from '@/common/js/cache';
+import { shuffle } from '@/common/js/utils';
+import { playMode } from '@/common/js/config';
+import {
+  saveSearch,
+  deleteSearch,
+  clearSearch,
+  savePlay
+} from '@/common/js/cache';
+import favorite from '@/api/favorite';
 
 function findIndex(list, song) {
-  return list.findIndex((item) => {
+  return list.findIndex(item => {
     return item.id === song.id;
   });
 }
 
-export const selectPlay = ({commit, state}, {list, index}) => {
+export const selectPlay = ({ commit, state }, { list, index }) => {
   commit(types.SET_SEQUENCE_LIST, list);
   if (state.mode === playMode.random) {
     let randomList = shuffle(list);
@@ -26,18 +32,17 @@ export const selectPlay = ({commit, state}, {list, index}) => {
   commit(types.SET_PLAYING_STATE, true);
 };
 
-export const randomPlay = ({commit}, {list}) => {
+export const randomPlay = ({ commit }, { list }) => {
   commit(types.SET_PLAY_MODE, playMode.random);
   commit(types.SET_SEQUENCE_LIST, list);
   let randomList = shuffle(list);
-  // console.log(randomList);
   commit(types.SET_PLAYLIST, randomList);
   commit(types.SET_CURRENT_INDEX, 0);
   commit(types.SET_FULL_SCREEN, true);
   commit(types.SET_PLAYING_STATE, true);
 };
 
-export const insertSong = ({commit, state}, song) => {
+export const insertSong = ({ commit, state }, song) => {
   let playList = state.playList.slice();
   let sequenceList = state.sequenceList.slice();
   let currentIndex = state.currentIndex;
@@ -76,19 +81,19 @@ export const insertSong = ({commit, state}, song) => {
   commit(types.SET_PLAYING_STATE, true);
 };
 
-export const saveSearchHistory = ({commit}, query) => {
+export const saveSearchHistory = ({ commit }, query) => {
   commit(types.SET_SEARCH_HISTORY, saveSearch(query));
 };
 
-export const deleteSearchHistory = ({commit}, query) => {
+export const deleteSearchHistory = ({ commit }, query) => {
   commit(types.SET_SEARCH_HISTORY, deleteSearch(query));
 };
 
-export const clearSearchHistory = ({commit}) => {
+export const clearSearchHistory = ({ commit }) => {
   commit(types.SET_SEARCH_HISTORY, clearSearch());
 };
 
-export const deleteSong = ({commit, state}, song) => {
+export const deleteSong = ({ commit, state }, song) => {
   let playList = state.playList.slice();
   let sequenceList = state.sequenceList.slice();
   let currentIndex = state.currentIndex;
@@ -107,20 +112,44 @@ export const deleteSong = ({commit, state}, song) => {
   commit(types.SET_PLAYING_STATE, playingState);
 };
 
-export const deleteSongList = ({commit}) => {
+export const deleteSongList = ({ commit }) => {
   commit('SET_PLAYLIST', []);
   commit('SET_SEQUENCE_LIST', []);
   commit('SET_CURRENT_INDEX', -1);
   commit(types.SET_PLAYING_STATE, false);
 };
 
-export const savePlayHistory = ({commit}, song) => {
+export const savePlayHistory = ({ commit }, song) => {
   commit(types.SET_PLAY_HISTORY, savePlay(song));
 };
-
-export const saveFavoriteList = ({commit}, song) => {
-  commit(types.SET_FAVORITE_LIST, saveFavorite(song));
+// 收藏-save
+export const saveFavoriteList = ({ commit, state }, song) => {
+  favorite
+    .save(state.userinfo.objectId, song)
+    .then(res => {
+      if (res) commit(types.SET_FAVORITE_LIST, res);
+    })
+    .catch(() => {});
 };
-export const deleteFavoriteList = ({commit}, song) => {
-  commit(types.SET_FAVORITE_LIST, deleteFavorite(song));
+// 收藏-del
+export const deleteFavoriteList = ({ commit, state }, song) => {
+  favorite
+    .delete(state.userinfo.objectId, song)
+    .then(res => {
+      if (res) commit(types.SET_FAVORITE_LIST, res);
+    })
+    .catch(() => {});
+};
+
+export const setUserInfo = ({ commit }, info) => {
+  if (info) {
+    favorite.find(info.objectId).then(res => {
+      let list = [];
+      if (res.songlist) {
+        list = JSON.parse(res.songlist);
+      }
+      commit(types.SET_FAVORITE_LIST, list);
+    });
+  }
+  commit(types.SET_USERINFO, info);
 };

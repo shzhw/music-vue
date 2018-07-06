@@ -5,6 +5,7 @@ import store from './store';
 import router from './router';
 import fastclick from 'fastclick';
 import VueLazyLoad from 'vue-lazyload';
+import './common/js/bmob-key';
 
 import '@/common/stylus/index.styl';
 
@@ -34,6 +35,7 @@ document.addEventListener('plusready', function() {
   plus.key.addEventListener(
     'backbutton',
     function() {
+      if (vue.$store.state.disableBack) return;
       // 先判斷播放器浮層
       if (vue.$store.state.fullScreen) {
         vue.$store.commit('SET_FULL_SCREEN', false);

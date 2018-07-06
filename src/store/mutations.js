@@ -39,6 +39,15 @@ const mutations = {
   },
   [types.SET_FAVORITE_LIST](state, list) {
     state.favoriteList = list;
+  },
+  [types.SET_USERINFO](state, info) {
+    state.userinfo = info;
+  },
+  [types.SET_ALERT](state, alert) {
+    state.alert = alert;
+  },
+  [types.SET_DISABLEBACK](state, sta) {
+    state.disableBack = sta;
   }
 };
 
