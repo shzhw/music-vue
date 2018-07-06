@@ -2,7 +2,7 @@
  * Created by ww on 2017/9/4.
  */
 import { playMode } from '@/common/js/config';
-import { loadSearch, loadPlay, loadFavorite } from '@/common/js/cache';
+import { loadSearch, loadPlay } from '@/common/js/cache';
 
 const state = {
   singer: {},
@@ -16,7 +16,7 @@ const state = {
   topList: [],
   searchHistory: loadSearch(),
   playHistory: loadPlay(),
-  favoriteList: loadFavorite(),
+  favoriteList: [],
   userinfo: null,
   alert: {
     text: '',

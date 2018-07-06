@@ -25,12 +25,6 @@ export default {
   },
   computed: {
     ...mapGetters(['userinfo'])
-  },
-  mounted() {},
-  watch: {
-    userinfo(newval) {
-      console.log(newval);
-    }
   }
 };
 </script>

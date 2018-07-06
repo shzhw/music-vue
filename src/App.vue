@@ -16,7 +16,7 @@ import Tab from '@/components/tab/tab';
 import Player from '@/components/player/player';
 import Alert from '@/base/alert/alert';
 import Users from '@/api/Users';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'app',
@@ -24,11 +24,12 @@ export default {
     ...mapGetters(['alert'])
   },
   mounted() {
-    this.setInfo(Users.getUserinfo());
+    let userinfo = Users.getUserinfo();
+    this.setInfo(userinfo);
   },
   methods: {
-    ...mapMutations({
-      setInfo: 'SET_USERINFO'
+    ...mapActions({
+      setInfo: 'setUserInfo'
     })
   },
   components: {
