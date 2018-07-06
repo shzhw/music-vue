@@ -1,15 +1,13 @@
 /**
  * Created by ww on 2017/9/12.
  */
-import {mapGetters, mapMutations, mapActions} from 'vuex';
-import {playMode} from '@/common/js/config';
-import {shuffle} from '@/common/js/utils';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+import { playMode } from '@/common/js/config';
+import { shuffle } from '@/common/js/utils';
 
 export const playlistMixin = {
   computed: {
-    ...mapGetters([
-      'playList'
-    ])
+    ...mapGetters(['playList'])
   },
   mounted() {
     this.handlePlayList(this.playList);
@@ -35,14 +33,16 @@ export const playerMixin = {
       return this.mode === playMode.sequence
         ? 'icon-sequence'
         : this.mode === playMode.loop
-          ? 'icon-loop' : 'icon-random';
+          ? 'icon-loop'
+          : 'icon-random';
     },
     ...mapGetters([
       'sequenceList',
       'currentSong',
       'mode',
       'playList',
-      'favoriteList'
+      'favoriteList',
+      'userinfo'
     ])
   },
   methods: {
@@ -59,7 +59,7 @@ export const playerMixin = {
       this.setPlayList(list);
     },
     resetCurrentIndex(list) {
-      let index = list.findIndex((item) => {
+      let index = list.findIndex(item => {
         return item.id === this.currentSong.id;
       });
       this.setCurrentIndex(index);
@@ -71,6 +71,13 @@ export const playerMixin = {
       return 'icon-not-favorite';
     },
     toogleFavorite(song) {
+      if (!this.userinfo) {
+        this.alert({
+          text: '请先登录',
+          isShow: true
+        });
+        return;
+      }
       if (this.isFavorite(song)) {
         this.deleteFavoriteList(song);
       } else {
@@ -78,7 +85,7 @@ export const playerMixin = {
       }
     },
     isFavorite(song) {
-      let index = this.favoriteList.findIndex((item) => {
+      let index = this.favoriteList.findIndex(item => {
         return item.id === song.id;
       });
       return index > -1;
@@ -87,12 +94,10 @@ export const playerMixin = {
       setPlayState: 'SET_PLAYING_STATE',
       setCurrentIndex: 'SET_CURRENT_INDEX',
       setPlayMode: 'SET_PLAY_MODE',
-      setPlayList: 'SET_PLAYLIST'
+      setPlayList: 'SET_PLAYLIST',
+      alert: 'SET_ALERT'
     }),
-    ...mapActions([
-      'saveFavoriteList',
-      'deleteFavoriteList'
-    ])
+    ...mapActions(['saveFavoriteList', 'deleteFavoriteList'])
   }
 };
 
@@ -104,9 +109,7 @@ export const searchMixin = {
     };
   },
   computed: {
-    ...mapGetters([
-      'searchHistory'
-    ])
+    ...mapGetters(['searchHistory'])
   },
   methods: {
     blurInput() {
@@ -121,9 +124,6 @@ export const searchMixin = {
     addQuery(query) {
       this.$refs.searchBox.setQuery(query);
     },
-    ...mapActions([
-      'saveSearchHistory',
-      'deleteSearchHistory'
-    ])
+    ...mapActions(['saveSearchHistory', 'deleteSearchHistory'])
   }
 };
