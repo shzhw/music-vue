@@ -83,7 +83,7 @@
         this.currentIndex = index;
       },
       selectSong(song, index) {
-        if (index !== 0) {
+        if (this.playHistory[0].id !== song.id) {
           this.insertSong(new Song(song));
         }
       },
