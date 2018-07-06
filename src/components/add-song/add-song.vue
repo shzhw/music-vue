@@ -20,7 +20,7 @@
           </scroll>
           <scroll class="list-scroll" :data="searchHistory" v-if="currentIndex === 1" ref="searchList" :refreshDelay="refreshDelay">
             <div class="list-inner">
-              <search-list :searches="searchHistory" @delete="deleteSearchHistory"></search-list>
+              <search-list :searches="searchHistory" @select="addQuery" @delete="deleteSearchHistory"></search-list>
             </div>
           </scroll>
         </div>
@@ -90,7 +90,7 @@
         this.currentIndex = index;
       },
       selectSong(song, index) {
-        if (index !== 0) {
+        if (this.playHistory[0].id !== song.id) {
           this.insertSong(new Song(song));
           this.showTip();
         }
