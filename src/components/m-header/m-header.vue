@@ -5,8 +5,9 @@
       <i class="icon-mine"></i>
     </router-link>
     <router-link to="/userinfo" class="mine" tag="div" v-else>
-      <i class="avatar" v-if="userinfo.avatar"><img :src="userinfo.avatar" alt=""></i>
-      <i class="icon-mine" v-else></i>
+      <!-- <i class="avatar" v-if="userinfo.avatar"><img :src="userinfo.avatar" alt=""></i>
+      <i class="icon-mine" v-else></i> -->
+      <i class="avatar"><img :src="avatar" alt=""></i>
       <span class="name">{{userinfo.nickname?userinfo.nickname:userinfo.username}}</span>
     </router-link>
   </div>
@@ -14,10 +15,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import avatar from '@/common/images/default.png';
 
 export default {
   data() {
-    return {};
+    return {
+      avatar
+    };
   },
   computed: {
     ...mapGetters(['userinfo'])
@@ -63,7 +67,7 @@ export default {
       float: left
       width: 30px
       height: 30px
-      margin: 7px 0 0
+      margin: 7px 6px 0
       border-radius: 50%
       overflow: hidden
       img
