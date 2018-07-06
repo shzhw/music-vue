@@ -35,7 +35,7 @@ const Disc = resolve => {
   });
 };
 const TopList = resolve => {
-  import('@/components/disc/disc').then(toplist => {
+  import('@/components/top-list/top-list').then(toplist => {
     resolve(toplist);
   });
 };
