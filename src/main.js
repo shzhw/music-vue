@@ -35,10 +35,7 @@ document.addEventListener('plusready', function() {
   plus.key.addEventListener(
     'backbutton',
     function() {
-      if (vue.$store.state.disableBack) {
-        vue.$store.commit('SET_DISABLEBACK', false);
-        return;
-      };
+      if (vue.$store.state.disableBack) return;
       // 先判斷播放器浮層
       if (vue.$store.state.fullScreen) {
         vue.$store.commit('SET_FULL_SCREEN', false);

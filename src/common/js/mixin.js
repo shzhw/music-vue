@@ -141,7 +141,7 @@ export const appbackMixin = {
       );
     });
   },
-  methods: {
+  mthods: {
     ...mapMutations({
       setDisBack: 'SET_DISABLEBACK'
     })
