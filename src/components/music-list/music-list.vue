@@ -19,7 +19,7 @@
       <div class="song-list-wrapper">
         <song-list :songs="songs" @select="selectItem" :rank="rank"></song-list>
       </div>
-      <loading-up v-show="!songs.length" @update="update"></loading-up>
+      <loading-up :show-flag="!songs.length" @update="update"></loading-up>
     </scroll>
   </div>
 </template>
