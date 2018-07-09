@@ -28,3 +28,5 @@ export const SET_FAVORITE_LIST = 'SET_FAVORITE_LIST';
 export const SET_USERINFO = 'SET_USERINFO';
 
 export const SET_ALERT = 'SET_ALERT';
+
+export const SET_DISABLEBACK = 'SET_DISABLEBACK';

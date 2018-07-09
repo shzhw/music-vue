@@ -15,15 +15,7 @@ apiRoutes.get('/getDiscList', function(req, res) {
       params: req.query
     })
     .then(response => {
-      var ret = response.data;
-      if (typeof ret === 'string') {
-        var reg = /^\w+\(({[^()]+})\)$/;
-        var matches = ret.match(reg);
-        if (matches) {
-          ret = JSON.parse(matches[1]);
-        }
-      }
-      res.json(ret);
+      res.send(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -41,15 +33,7 @@ apiRoutes.get('/lyric', function(req, res) {
       params: req.query
     })
     .then(response => {
-      var ret = response.data;
-      if (typeof ret === 'string') {
-        var reg = /^\w+\(({[^()]+})\)$/;
-        var matches = ret.match(reg);
-        if (matches) {
-          ret = JSON.parse(matches[1]);
-        }
-      }
-      res.json(ret);
+      res.send(response.data);
     })
     .catch(err => {
       console.log(err);
@@ -67,15 +51,8 @@ apiRoutes.get('/songlist', function(req, res) {
       params: req.query
     })
     .then(response => {
-      var ret = response.data;
-      if (typeof ret === 'string') {
-        var reg = /^\w+\(({[^()]+})\)$/;
-        var matches = ret.match(reg);
-        if (matches) {
-          ret = JSON.parse(matches[1]);
-        }
-      }
-      res.json(ret);
+      // 这个请求会将cbk的开头__去掉，原因未知
+      res.send('__' + response.data);
     })
     .catch(err => {
       console.log(err);

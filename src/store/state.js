@@ -22,7 +22,9 @@ const state = {
     text: '',
     isShow: false,
     hidecbk: null
-  }
+  },
+  // app backbutton事件
+  disableBack: false
 };
 
 export default state;

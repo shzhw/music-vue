@@ -127,3 +127,28 @@ export const searchMixin = {
     ...mapActions(['saveSearchHistory', 'deleteSearchHistory'])
   }
 };
+
+export const appbackMixin = {
+  mounted() {
+    document.addEventListener('plusready', () => {
+      /* eslint-disable no-undef  */
+      plus.key.addEventListener(
+        'backbutton',
+        () => {
+          this.showFlag = false;
+        },
+        false
+      );
+    });
+  },
+  methods: {
+    ...mapMutations({
+      setDisBack: 'SET_DISABLEBACK'
+    })
+  },
+  watch: {
+    showFlag(newVal) {
+      this.setDisBack(newVal);
+    }
+  }
+};

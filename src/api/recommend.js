@@ -2,8 +2,7 @@
  * Created by Administrator on 2017-07-03.
  */
 import jsonp from '@/common/js/jsonp';
-import {commonParamas, options} from './config';
-import axios from 'axios';
+import { commonParamas, options, proxyUrl } from './config';
 
 export function getRecommend() {
   const url = 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg';
@@ -16,7 +15,7 @@ export function getRecommend() {
 }
 
 export function getDiscList() {
-  const url = '/api/getDiscList';
+  const url = proxyUrl + '/api/getDiscList';
   const data = Object.assign({}, commonParamas, {
     platform: 'yqq',
     hostUin: 0,
@@ -27,16 +26,11 @@ export function getDiscList() {
     categoryId: 10000000,
     rnd: Math.random()
   });
-  return axios
-    .get(url, { params: data })
-    .then(res => {
-      return Promise.resolve(res.data);
-    })
-    .catch(e => { return Promise.reject(e); });
+  return jsonp(url, data, options);
 }
 
 export function getSongList(disstid) {
-  const url = `/api/songlist`;
+  const url = proxyUrl + `/api/songlist`;
   const data = Object.assign({}, commonParamas, {
     disstid,
     type: 1,
@@ -46,15 +40,7 @@ export function getSongList(disstid) {
     g_tk: 1768473683,
     hostUin: 0,
     platform: 'yqq',
-    needNewCode: 1,
-    format: 'json'
+    needNewCode: 1
   });
-  return axios
-    .get(url, { params: data })
-    .then(res => {
-      return Promise.resolve(res.data);
-    })
-    .catch(e => {
-      return Promise.reject(e);
-    });
+  return jsonp(url, data, options);
 }

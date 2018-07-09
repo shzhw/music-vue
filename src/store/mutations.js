@@ -45,6 +45,9 @@ const mutations = {
   },
   [types.SET_ALERT](state, alert) {
     state.alert = alert;
+  },
+  [types.SET_DISABLEBACK](state, sta) {
+    state.disableBack = sta;
   }
 };
 

@@ -39,7 +39,7 @@ export default class Song {
   }
   getVKey() {
     if (this.vkey) {
-      return Promise.resolve(this.vkey);
+      return Promise.resolve();
     } else {
       return new Promise((resolve, reject) => {
         getSongVKey(this.mid)
@@ -49,7 +49,7 @@ export default class Song {
               this.url = `http://dl.stream.qqmusic.qq.com/C400${
                 this.mid
               }.m4a?guid=4216154655&vkey=${this.vkey}&uin=0&fromtag=38`;
-              resolve(this.vkey);
+              resolve();
             } else {
               reject('no vkey');
             }
@@ -70,7 +70,7 @@ export function createSong(musicData) {
     name: musicData.songname,
     album: musicData.albumname,
     duration: musicData.interval,
-    image: `//y.gtimg.cn/music/photo_new/T002R300x300M000${
+    image: `http://y.gtimg.cn/music/photo_new/T002R300x300M000${
       musicData.albummid
     }.jpg?max_age=2592000`
     // url: `http://isure.stream.qqmusic.qq.com/c400${
