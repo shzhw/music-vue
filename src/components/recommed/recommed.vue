@@ -117,6 +117,8 @@
       .slider_wrapper
         position: relative
         width: 100%
+        min-height: 144px
+        max-height: 300px
         overflow: hidden
       .recommed_list
         .list_title
