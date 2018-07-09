@@ -26,7 +26,7 @@
           </ul>
         </div>
       </div>
-      <loading-up v-show="!discList.length" @update="update"></loading-up>
+      <loading-up :show-flag="!discList.length" @update="update"></loading-up>
     </scroll>
     <router-view></router-view>
   </div>
