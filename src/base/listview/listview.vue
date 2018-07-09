@@ -33,16 +33,14 @@
     <div class="list_fixed" v-show="fixedTitle" ref="fixed">
       <h1 class="fixed_title">{{fixedTitle}}</h1>
     </div>
-    <div class="loading_wrapper" v-show="!data.length">
-      <loading></loading>
-    </div>
+    <loading-up v-show="!data.length" @update="update"></loading-up>
   </scroll>
 </template>
 
 <script>
 import Scroll from '@/base/scroll/scroll';
 import { getData } from '@/common/js/dom';
-import Loading from '@/base/loading/loading';
+import LoadingUp from '@/base/loading-up/loading-up';
 
 const ANCHOR_HEIGHT = 18;
 const TITLE_HEIGHT = 24;
@@ -83,6 +81,9 @@ export default {
     }
   },
   methods: {
+    update() {
+      this.$emit('update');
+    },
     refresh() {
       this.$refs.listview.refresh();
     },
@@ -177,7 +178,7 @@ export default {
   },
   components: {
     Scroll,
-    Loading
+    LoadingUp
   }
 };
 </script>
@@ -185,13 +186,13 @@ export default {
 <style scoped lang="stylus">
 @import '../../common/stylus/variable.styl'
 
-.listview 
+.listview
   height: 100%
   overflow: hidden
   position: relative
-  ul 
-    .list_group 
-      .list_group_title 
+  ul
+    .list_group
+      .list_group_title
         font-size: 12px
         color: $color-highlight-text
         background-color: $color-highlight-background
@@ -199,25 +200,25 @@ export default {
         height: 24px
         padding-left: 12px
         border-left: 8px solid $color-theme
-      ul 
+      ul
         padding-bottom: 10px
-        .list_group_item 
+        .list_group_item
           color: $color-text-d
           margin-top: 10px
           font-size: 0
           overflow: hidden
           padding: 0 30px
-          .avatar 
+          .avatar
             width: 40px
             height: 40px
             border-radius: 50%
             float: left
             margin-right: 15px
-          .name 
+          .name
             line-height: 40px
             font-size: 14px
             float: left
-  .list_shortcut 
+  .list_shortcut
     width: 20px
     padding: 15px 0
     border-radius: 9px
@@ -228,13 +229,13 @@ export default {
     color: $color-highlight-text
     text-align: center
     background-color: $color-background-d
-    .item 
+    .item
       height: 16px
       line-height: 18px
       &.active
         color: $color-theme
         font-weight: bold
-  .list_fixed 
+  .list_fixed
     position: absolute
     top: -1px
     left: 0
@@ -246,9 +247,4 @@ export default {
     height: 24px
     padding-left: 12px
     border-left: 8px solid $color-theme
-  .loading_wrapper 
-    position: absolute
-    width: 100%
-    top: 50%
-    transform: translateY(-50%)
 </style>

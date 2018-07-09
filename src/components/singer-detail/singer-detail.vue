@@ -1,6 +1,6 @@
 <template>
   <transition name="slider">
-    <music-list :bgImg="bgImg" :title="title" :songs="songs"></music-list>
+    <music-list :bgImg="bgImg" :title="title" :songs="songs" @update="update"></music-list>
   </transition>
 </template>
 
@@ -33,6 +33,9 @@
       // console.log(this.singer);
     },
     methods: {
+      update() {
+        this._getDetail();
+      },
       _getDetail() {
         if (!this.singer.id) {
           this.$router.push('/singer');

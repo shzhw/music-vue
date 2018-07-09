@@ -26,132 +26,136 @@
           </ul>
         </div>
       </div>
-      <div class="loading_wrapper" v-show="!discList.length">
-        <loading></loading>
-      </div>
+      <loading-up v-show="!discList.length" @update="update"></loading-up>
     </scroll>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import {getRecommend, getDiscList} from '@/api/recommend';
-  import {ERR_OK} from '@/api/config';
-  import Slider from '@/base/slider/slider';
-  import Scroll from '@/base/scroll/scroll';
-  import Loading from '@/base/loading/loading';
-  import {playlistMixin} from '@/common/js/mixin';
-  import {mapMutations} from 'vuex';
+import { getRecommend, getDiscList } from '@/api/recommend';
+import { ERR_OK } from '@/api/config';
+import Slider from '@/base/slider/slider';
+import Scroll from '@/base/scroll/scroll';
+import LoadingUp from '@/base/loading-up/loading-up';
+import { playlistMixin } from '@/common/js/mixin';
+import { mapMutations } from 'vuex';
 
-  export default {
-    mixins: [playlistMixin],
-    created() {
+export default {
+  mixins: [playlistMixin],
+  created() {
+    this._getRecommend();
+    this._getDiscList();
+  },
+  destory() {
+    clearTimeout(this.timer);
+  },
+  data() {
+    return {
+      sliderData: [],
+      discList: [],
+      checkLoaded: true
+    };
+  },
+  methods: {
+    update() {
       this._getRecommend();
       this._getDiscList();
     },
-    destory() {
-      clearTimeout(this.timer);
+    selectItem(item) {
+      this.$router.push({
+        path: `/recommend/${item.dissid}`
+      });
+      // console.log(item);
+      this.setDisc(item);
     },
-    data() {
-      return {
-        sliderData: [],
-        discList: [],
-        checkLoaded: true
-      };
+    handlePlayList(playList) {
+      const bottom = playList.length > 0 ? '60px' : '';
+      this.$refs.recommed.style.bottom = bottom;
+      this.$refs.scroll.refresh();
     },
-    methods: {
-      selectItem(item) {
-        this.$router.push({
-          path: `/recommend/${item.dissid}`
-        });
-        // console.log(item);
-        this.setDisc(item);
-      },
-      handlePlayList(playList) {
-        const bottom = playList.length > 0 ? '60px' : '';
-        this.$refs.recommed.style.bottom = bottom;
-        this.$refs.scroll.refresh();
-      },
-      _getRecommend() {
-        getRecommend().then((res) => {
+    _getRecommend() {
+      getRecommend()
+        .then(res => {
           if (res.code === ERR_OK) {
             this.sliderData = res.data.slider;
           }
-        }).catch((e) => {});
-      },
-      _getDiscList() {
-        getDiscList().then((res) => {
+        })
+        .catch(e => {});
+    },
+    _getDiscList() {
+      getDiscList()
+        .then(res => {
           if (res.code === ERR_OK) {
             this.discList = res.data.list;
           }
-        }).catch((e) => {});
-      },
-      imgOnload() {
-        if (this.checkLoaded) {
-          this.$refs.scroll.refresh();
-          this.checkLoaded = false;
-        }
-      },
-      ...mapMutations({
-        setDisc: 'SET_DISC'
-      })
+        })
+        .catch(e => {});
     },
-    components: {
-      Slider,
-      Scroll,
-      Loading
-    }
-  };
+    imgOnload() {
+      if (this.checkLoaded) {
+        this.$refs.scroll.refresh();
+        this.checkLoaded = false;
+      }
+    },
+    ...mapMutations({
+      setDisc: 'SET_DISC'
+    })
+  },
+  components: {
+    Slider,
+    Scroll,
+    LoadingUp
+  }
+};
 </script>
 
 <style scoped lang="stylus">
-  @import '../../common/stylus/variable.styl'
-  .recommed
-    position: fixed
-    top: 88px
-    bottom: 0
-    width: 100%
-    .recommed_content
-      height: 100%
+@import '../../common/stylus/variable.styl'
+
+.recommed
+  position: fixed
+  top: 88px
+  bottom: 0
+  width: 100%
+  .recommed_content
+    height: 100%
+    overflow: hidden
+    .slider_wrapper
+      position: relative
+      width: 100%
+      min-height: 144px
+      max-height: 300px
       overflow: hidden
-      .slider_wrapper
-        position: relative
-        width: 100%
-        overflow: hidden
-      .recommed_list
-        .list_title
-          height: 65px
-          line-height: 65px
-          font-size: $font-size-medium
-          text-align: center;
-          color: $color-theme
-          font-weight: bold
-        ul
-          padding: 0 15px
-          .item
+    .recommed_list
+      .list_title
+        height: 65px
+        line-height: 65px
+        font-size: $font-size-medium
+        text-align: center
+        color: $color-theme
+        font-weight: bold
+      ul
+        padding: 0 15px
+        .item
+          display: flex
+          padding: 0 20px 20px 20px
+          align-items: center
+          .icon
+            flex: 0 0 60px
+            width: 60px
+            padding-right: 20px
+          .text
+            flex: 1
             display: flex
-            padding: 0 20px 20px 20px
-            align-items: center
-            .icon
-              flex: 0 0 60px
-              width: 60px
-              padding-right: 20px
-            .text
-              flex: 1
-              display: flex
-              flex-direction: column
-              justify-content: center
-              line-height: 20px
-              overflow: hidden
-              font-size: $font-size-medium
-              .name
-                margin-bottom: 10px
-                color: $color-text
-              .desc
-                color: $color-text-d
-      .loading_wrapper
-        position: absolute
-        width: 100%
-        top: 50%
-        transform: translateY(-50%);
+            flex-direction: column
+            justify-content: center
+            line-height: 20px
+            overflow: hidden
+            font-size: $font-size-medium
+            .name
+              margin-bottom: 10px
+              color: $color-text
+            .desc
+              color: $color-text-d
 </style>

@@ -1,6 +1,6 @@
 <template>
   <transition name="slider">
-    <music-list :bgImg="bgImg" :title="title" :songs="songs"></music-list>
+    <music-list :bgImg="bgImg" :title="title" :songs="songs" @update="update"></music-list>
   </transition>
 </template>
 
@@ -32,6 +32,9 @@
       ])
     },
     methods: {
+      update() {
+        this._getSongList();
+      },
       _getSongList() {
         if (!this.disc.dissid) {
           this.$router.push('/recommend');
