@@ -3,7 +3,7 @@
     <div class="loading_wrapper">
       <loading v-if="network"></loading>
       <div class="out" v-else>
-        <i class="icon-perm_scan_wifi icon"></i>
+        <i class="icon-signal_wifi_off icon"></i>
         <span class="text">请检查网络连接</span>
       </div>
     </div>
@@ -27,30 +27,30 @@ export default {
     };
   },
   mounted() {
-    if (this.showFlag) {
+    this.flagTimer();
+  },
+  methods: {
+    clickHandler() {
+      if (!this.network) {
+        this.$emit('update');
+        this.network = true;
+      }
+    },
+    flagTimer() {
       if (this.timer) {
         clearTimeout(this.timer);
       }
       this.timer = setTimeout(() => {
-        this.network = false;
-      }, 3000);
-    }
-  },
-  methods: {
-    clickHandler() {
-      if (!this.network) this.$emit('update');
+        if (this.showFlag) this.network = false;
+      }, 2500);
     }
   },
   watch: {
     showFlag(newVal) {
-      if (newVal) {
-        if (this.timer) {
-          clearTimeout(this.timer);
-        }
-        this.timer = setTimeout(() => {
-          this.network = false;
-        }, 3000);
-      }
+      if (!newVal) this.network = true;
+    },
+    network() {
+      this.flagTimer();
     }
   },
   components: {
