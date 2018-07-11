@@ -1,16 +1,19 @@
 <template>
   <div class="recommed" ref="recommed">
+    <div v-if="sliderData.length" class="slider_wrapper">
+      <swiper :options="swiperOption" ref="swiper">
+        <!-- slides -->
+        <swiper-slide v-for="(item,i) in sliderData" :key="i">
+          <a :href="item.linkUrl" style="display:block;width:100%">
+            <img @load="imgOnload" :src="item.picUrl" alt="" style="width:100%">
+          </a>
+        </swiper-slide>
+        <!-- Optional controls -->
+        <div class="swiper-pagination"  slot="pagination"></div>
+      </swiper>
+    </div>
     <scroll ref="scroll" class="recommed_content" :data="discList">
       <div>
-        <div v-if="sliderData.length" class="slider_wrapper">
-          <slider>
-            <div v-for="(item,i) in sliderData" :key="i">
-              <a :href="item.linkUrl">
-                <img @load="imgOnload" :src="item.picUrl" alt="">
-              </a>
-            </div>
-          </slider>
-        </div>
         <div class="recommed_list">
           <h2 class="list_title">热门歌单推荐</h2>
           <ul>
@@ -35,7 +38,8 @@
 <script>
 import { getRecommend, getDiscList } from '@/api/recommend';
 import { ERR_OK } from '@/api/config';
-import Slider from '@/base/slider/slider';
+import 'swiper/dist/css/swiper.css';
+import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import Scroll from '@/base/scroll/scroll';
 import LoadingUp from '@/base/loading-up/loading-up';
 import { playlistMixin } from '@/common/js/mixin';
@@ -54,7 +58,12 @@ export default {
     return {
       sliderData: [],
       discList: [],
-      checkLoaded: true
+      checkLoaded: true,
+      swiperOption: {
+        pagination: {
+          el: '.swiper-pagination'
+        }
+      }
     };
   },
   methods: {
@@ -66,7 +75,6 @@ export default {
       this.$router.push({
         path: `/recommend/${item.dissid}`
       });
-      // console.log(item);
       this.setDisc(item);
     },
     handlePlayList(playList) {
@@ -103,7 +111,8 @@ export default {
     })
   },
   components: {
-    Slider,
+    swiper,
+    swiperSlide,
     Scroll,
     LoadingUp
   }
@@ -122,11 +131,7 @@ export default {
     height: 100%
     overflow: hidden
     .slider_wrapper
-      position: relative
       width: 100%
-      min-height: 144px
-      max-height: 300px
-      overflow: hidden
     .recommed_list
       .list_title
         height: 65px
