@@ -2,7 +2,7 @@
  * Created by ww on 2017/9/15.
  */
 import jsonp from '@/common/js/jsonp';
-import {commonParamas, options} from './config';
+import { commonParamas, options, proxyUrl } from './config';
 
 export function getHotKey() {
   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg';
@@ -14,7 +14,7 @@ export function getHotKey() {
 }
 
 export function search(query, page, zhida, perpage) {
-  const url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp';
+  const url = proxyUrl + '/api/search';
   const data = Object.assign({}, commonParamas, {
     w: query,
     p: page,
