@@ -31,7 +31,7 @@
       </div>
       <loading-up :show-flag="!discList.length" @update="update"></loading-up>
     </scroll>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -124,7 +124,7 @@ export default {
 
 .recommed
   position: fixed
-  top: 88px
+  top: 0
   bottom: 0
   width: 100%
   .recommed_content

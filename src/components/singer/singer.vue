@@ -1,7 +1,7 @@
 <template>
   <div class="singer" ref="singer">
     <list-view :data="singers" @select="selectSinger" ref="list" @update="update"></list-view>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -106,8 +106,8 @@
 <style scoped lang="stylus">
   @import '../../common/stylus/variable.styl'
   .singer
-    position: fixed
-    top: 88px
+    position: absolute
+    top: 0
     bottom: 0
     width: 100%
 </style>

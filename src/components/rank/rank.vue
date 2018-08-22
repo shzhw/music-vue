@@ -18,7 +18,7 @@
         <loading></loading>
       </div>
     </scroll>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -80,9 +80,9 @@
   @import "../../common/stylus/mixin"
 
   .rank
-    position: fixed
+    position: absolute
     width: 100%
-    top: 88px
+    top: 0
     bottom: 0
     .toplist
       height: 100%

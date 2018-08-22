@@ -30,7 +30,7 @@
       <suggest @listScroll="blurInput" @select="saveSearch" :query="query" ref="suggest"></suggest>
     </div>
     <confirm ref="confirm" text="是否清空所有搜索历史" @confirm="confirm"></confirm>
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -117,8 +117,8 @@
     .search-box-wrapper
       margin: 20px
     .shortcut-wrapper
-      position: fixed
-      top: 178px
+      position: absolute
+      top: 80px
       bottom: 0
       width: 100%
       .shortcut
@@ -158,8 +158,8 @@
                 font-size: $font-size-medium
                 color: $color-text-d
     .search-result
-      position: fixed
+      position: absolute
       width: 100%
-      top: 178px
+      top: 80px
       bottom: 0
 </style>

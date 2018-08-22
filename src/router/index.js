@@ -63,48 +63,91 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/recommend'
+      components: {
+        recommed: Recommed,
+        singer: Singer,
+        rank: Rank,
+        search: Search
+      }
+      // children: [
+      //   {
+      //     path: '/recommend/:id',
+      //     component: Disc
+      //   },
+      //   {
+      //     path: '/singer/:id',
+      //     component: SingerDetail
+      //   },
+      //   {
+      //     path: '/rank/:id',
+      //     component: TopList
+      //   },
+      //   {
+      //     path: '/search/:id',
+      //     component: SingerDetail
+      //   }
+      // ]
     },
     {
-      path: '/recommend',
-      component: Recommed,
-      children: [
-        {
-          path: ':id',
-          component: Disc
-        }
-      ]
+      path: '/recommend/:id',
+      component: Disc
     },
     {
-      path: '/singer',
-      component: Singer,
-      children: [
-        {
-          path: ':id',
-          component: SingerDetail
-        }
-      ]
+      path: '/singer/:id',
+      component: SingerDetail
     },
     {
-      path: '/rank',
-      component: Rank,
-      children: [
-        {
-          path: ':id',
-          component: TopList
-        }
-      ]
+      path: '/rank/:id',
+      component: TopList
     },
     {
-      path: '/search',
-      component: Search,
-      children: [
-        {
-          path: ':id',
-          component: SingerDetail
-        }
-      ]
+      path: '/search/:id',
+      component: SingerDetail
     },
+    // {
+    //   path: '/',
+    //   redirect: '/recommend'
+    // },
+    // {
+    //   path: '/recommend',
+    //   component: Recommed,
+    //   children: [
+    //     {
+    //       path: ':id',
+    //       component: Disc
+    //     }
+    //   ]
+    // },
+    // {
+    //   path: '/singer',
+    //   component: Singer,
+    //   children: [
+    //     {
+    //       path: ':id',
+    //       component: SingerDetail
+    //     }
+    //   ]
+    // },
+    // {
+    //   path: '/rank',
+    //   component: Rank,
+    //   children: [
+    //     {
+    //       path: ':id',
+    //       component: TopList
+    //     }
+    //   ]
+    // },
+    // {
+    //   path: '/search',
+    //   component: Search,
+    //   children: [
+    //     {
+    //       path: ':id',
+    //       component: SingerDetail
+    //     }
+    //   ]
+    // },
     {
       path: '/userinfo',
       component: UserContent,
