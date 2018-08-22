@@ -1,6 +1,6 @@
 <template>
-  <transition name="slide">
-    <div class="box">
+  <transition :name="isRight?'slide':'slide-l'">
+    <div class="box" @touchstart="moveStart" @touchmove="moving" @touchend="moveEnd" ref="wrapper">
       <div class="back" @click="back">
         <i class="icon-back"></i>
       </div>
@@ -14,13 +14,56 @@
 import LoadingLayer from '@/base/loading-layer/loading-layer';
 
 export default {
-  data() {
-    return {};
+  props: {
+    direction: {
+      type: String,
+      default: 'right'
+    }
   },
-  computed: {},
+  data() {
+    return {
+      startX: 0,
+      touch: false
+    };
+  },
+  computed: {
+    isRight() {
+      return this.direction === 'right';
+    },
+    flag() {
+      return this.isRight ? 1 : -1;
+    }
+  },
   methods: {
+    moveStart(e) {
+      this.startX = e.touches[0].pageX;
+      this.touch = true;
+    },
+    moving(e) {
+      if (this.touch) {
+        let endX = e.touches[0].pageX;
+        let offset = endX - this.startX;
+        if (this.isRight ? offset > 0 : offset < 0) {
+          this.$refs.wrapper.style.transform = `translateX(${offset}px)`;
+        }
+      }
+    },
+    moveEnd(e) {
+      let endX = e.changedTouches[0].pageX;
+      let offset = endX - this.startX;
+      if (this.isRight ? offset > 100 : offset < -100) {
+        this.$refs.wrapper.style.transition = 'all 0.3s';
+        this.$refs.wrapper.style.transform += `translateX(${window.innerWidth *
+          this.flag}px)`;
+        setTimeout(() => {
+          this.back();
+        }, 200);
+      } else {
+        this.$refs.wrapper.removeAttribute('style');
+      }
+      this.touch = false;
+    },
     back() {
-      // console.log(this.$refs.loadingLayer.isShow);
       if (this.$refs.loadingLayer.isShow) {
         this.$refs.loadingLayer.hide();
         return;
@@ -47,13 +90,15 @@ export default {
   position: fixed
   top: 0
   bottom: 0
-  z-index: 100
+  z-index: 200
   width: 100%
   background: $color-theme-background
-  &.slide-enter-active, &.slide-leave-active
+  &.slide-enter-active, &.slide-leave-active, &.slide-l-enter-active, &.slide-l-leave-active
     transition: all 0.3s
   &.slide-enter, &.slide-leave-to
     transform: translate3d(100%, 0, 0)
+  &.slide-l-enter, &.slide-l-leave-to
+    transform: translate3d(-100%, 0, 0)
   .back
     position: absolute
     top: 0

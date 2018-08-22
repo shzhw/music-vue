@@ -1,27 +1,29 @@
 <template>
-  <div class="music-list">
-    <div class="back" @click="back">
-      <i class="icon-back"></i>
-    </div>
-    <h1 class="title" v-html="title"></h1>
-    <div class="bg-image" :style="bgStyle" ref="bgImg">
-      <div class="play-wrapper">
-        <div class="play" v-show="songs.length>0" ref="playBtn" @click="random">
-          <i class="icon-play"></i>
-          <span class="text">随机播放全部</span>
+  <transition name="slider">
+    <div class="music-list" @touchstart="moveStart" @touchmove="moving" @touchend="moveEnd" ref="wrapper">
+      <div class="back" @click="back">
+        <i class="icon-back"></i>
+      </div>
+      <h1 class="title" v-html="title"></h1>
+      <div class="bg-image" :style="bgStyle" ref="bgImg">
+        <div class="play-wrapper">
+          <div class="play" v-show="songs.length>0" ref="playBtn" @click="random">
+            <i class="icon-play"></i>
+            <span class="text">随机播放全部</span>
+          </div>
         </div>
+        <div class="filter" ref="filter"></div>
       </div>
-      <div class="filter" ref="filter"></div>
+      <div class="bg-layer" ref="bgLayer"></div>
+      <scroll @scroll="scroll" :probe-type="probeType" :listen-scroll="listenScroll" :data="songs" class="list"
+              ref="list">
+        <div class="song-list-wrapper">
+          <song-list :songs="songs" @select="selectItem" :rank="rank"></song-list>
+        </div>
+        <loading-up :show-flag="!songs.length" @update="update"></loading-up>
+      </scroll>
     </div>
-    <div class="bg-layer" ref="bgLayer"></div>
-    <scroll @scroll="scroll" :probe-type="probeType" :listen-scroll="listenScroll" :data="songs" class="list"
-            ref="list">
-      <div class="song-list-wrapper">
-        <song-list :songs="songs" @select="selectItem" :rank="rank"></song-list>
-      </div>
-      <loading-up :show-flag="!songs.length" @update="update"></loading-up>
-    </scroll>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -58,7 +60,10 @@ export default {
   },
   data() {
     return {
-      scorllY: 0
+      scorllY: 0,
+      touch: false,
+      startX: 0,
+      endX: 0
     };
   },
   computed: {
@@ -107,6 +112,35 @@ export default {
     }
   },
   methods: {
+    moveStart(e) {
+      this.startX = e.touches[0].pageX;
+      this.touch = true;
+    },
+    moving(e) {
+      if (this.touch) {
+        let endX = e.touches[0].pageX;
+        let offset = endX - this.startX;
+        if (offset > 0) {
+          this.$refs.wrapper.style.transform = `translateX(${offset}px)`;
+        }
+      }
+    },
+    moveEnd(e) {
+      let endX = e.changedTouches[0].pageX;
+      let offset = endX - this.startX;
+      if (offset > 100) {
+        this.$refs.wrapper.style.transition = 'all 0.3s';
+        this.$refs.wrapper.style.transform += `translateX(${
+          window.innerWidth
+        }px)`;
+        setTimeout(() => {
+          this.back();
+        }, 300);
+      } else {
+        this.$refs.wrapper.removeAttribute('style');
+      }
+      this.touch = false;
+    },
     update() {
       this.$emit('update');
     },
@@ -226,4 +260,8 @@ export default {
     .song-list-wrapper
       padding: 20px 30px
     /* background: $color-theme-background */
+.slider-enter-active, .slider-leave-active
+  transition: all 0.3s
+.slider-enter, .slider-leave-to
+  transform: translate3d(100%, 0, 0)
 </style>

@@ -1,7 +1,5 @@
 <template>
-  <transition name="slide">
-    <music-list :title="title" :bgImg="bgImg" :songs="songs" :rank="true" @update="update"></music-list>
-  </transition>
+  <music-list :title="title" :bgImg="bgImg" :songs="songs" :rank="true" @update="update"></music-list>
 </template>
 
 <script>
@@ -69,8 +67,4 @@ export default {
 </script>
 
 <style scoped lang="stylus">
-.slider-enter-active, .slider-leave-active
-  transition: all 0.3s
-.slider-enter, .slider-leave-to
-  transform: translate3d(100%, 0, 0)
 </style>
