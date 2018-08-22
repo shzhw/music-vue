@@ -2,14 +2,16 @@
   <div id="app">
     <m-header></m-header>
     <tab v-model="curIndex"></tab>
-    <swiper class="swiper" :options="swiperOption" ref="swiper" @slideChange="slideChange">
-      <swiper-slide v-for="(item,i) in ['recommed', 'singer', 'rank', 'search']" :key="i">
-        <keep-alive v-if="loadView.indexOf(i) !== -1">
-          <router-view :name="item"></router-view> 
-        </keep-alive>
-        <loading class="loading" v-else size="large"></loading>
-      </swiper-slide>
-    </swiper>
+    <div class="main">
+      <swiper class="swiper" :options="swiperOption" ref="swiper" @slideChange="slideChange">
+        <swiper-slide v-for="(item,i) in ['recommed', 'singer', 'rank', 'search']" :key="i">
+          <keep-alive v-if="loadView.indexOf(i) !== -1">
+            <router-view :name="item"></router-view> 
+          </keep-alive>
+          <loading class="loading" v-else size="large"></loading>
+        </swiper-slide>
+      </swiper>
+    </div>
     <router-view></router-view>
     <player></player>
     <alert :alert="alert"></alert>
@@ -75,10 +77,17 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import 'common/stylus/variable.styl'
 
-#app, .swiper
+#app
   height: 100%
-  .loading
-    position: absolute
-    top: 30%
-    transform: translateY(-50%)
+  .main
+    position: fixed
+    top: 88px
+    bottom: 0
+    width: 100%
+    .swiper
+      height: 100%
+      .loading
+        position: absolute
+        top: 30%
+        transform: translateY(-50%)
 </style>

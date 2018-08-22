@@ -1,10 +1,10 @@
 <template>
   <div class="recommed" ref="recommed">
     <div v-if="sliderData.length" class="slider_wrapper">
-      <swiper :options="swiperOption" ref="swiper">
+      <swiper class="slider" :options="swiperOption" ref="swiper">
         <!-- slides -->
         <swiper-slide v-for="(item,i) in sliderData" :key="i">
-          <a :href="item.linkUrl" style="display:block;width:100%">
+          <a href="javascript:void(0)" style="display:block;width:100%">
             <img @load="imgOnload" :src="item.picUrl" alt="" style="width:100%">
           </a>
         </swiper-slide>
@@ -123,16 +123,18 @@ export default {
 @import '../../common/stylus/variable.styl'
 
 .recommed
-  position: fixed
+  position: absolute
   top: 0
   bottom: 0
   width: 100%
+  display: flex
+  flex-direction: column
+  .slider_wrapper
+    width: 100%
+    min-height: 128px
   .recommed_content
-    height: 100%
+    flex: 1
     overflow: hidden
-    .slider_wrapper
-      width: 100%
-      min-height: 128px
     .recommed_list
       .list_title
         height: 65px
