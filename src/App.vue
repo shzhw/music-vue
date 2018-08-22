@@ -2,13 +2,10 @@
   <div id="app">
     <m-header></m-header>
     <tab v-model="curIndex"></tab>
-    <!-- <keep-alive>
-      <router-view></router-view>
-    </keep-alive> -->
     <swiper class="swiper" :options="swiperOption" ref="swiper" @slideChange="slideChange">
       <swiper-slide v-for="(item,i) in ['recommed', 'singer', 'rank', 'search']" :key="i">
-        <keep-alive v-if="i in loadView">
-          <router-view :name="item"></router-view>          
+        <keep-alive v-if="loadView.indexOf(i) !== -1">
+          <router-view :name="item"></router-view> 
         </keep-alive>
         <loading class="loading" v-else size="large"></loading>
       </swiper-slide>
@@ -56,8 +53,8 @@ export default {
   },
   watch: {
     curIndex(now, old) {
+      if (this.loadView.indexOf(now) === -1) this.loadView.push(now);
       if (now === this.$refs.swiper.swiper.activeIndex) {
-        if (!(now in this.loadView)) this.loadView.push(now);
         return;
       }
       this.$refs.swiper.swiper.slideTo(now, 200, false);
