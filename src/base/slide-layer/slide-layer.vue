@@ -20,7 +20,7 @@ export default {
   computed: {},
   methods: {
     back() {
-      console.log(this.$refs.loadingLayer.isShow);
+      // console.log(this.$refs.loadingLayer.isShow);
       if (this.$refs.loadingLayer.isShow) {
         this.$refs.loadingLayer.hide();
         return;

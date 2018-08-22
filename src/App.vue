@@ -7,7 +7,10 @@
     </keep-alive> -->
     <swiper class="swiper" :options="swiperOption" ref="swiper" @slideChange="slideChange">
       <swiper-slide v-for="(item,i) in ['recommed', 'singer', 'rank', 'search']" :key="i">
-        <router-view :name="item"></router-view>
+        <keep-alive v-if="i in loadView">
+          <router-view :name="item"></router-view>          
+        </keep-alive>
+        <loading class="loading" v-else size="large"></loading>
       </swiper-slide>
     </swiper>
     <router-view></router-view>
@@ -22,6 +25,8 @@ import Tab from '@/components/tab/tab';
 import Player from '@/components/player/player';
 import Alert from '@/base/alert/alert';
 import Users from '@/api/Users';
+import Loading from '@/base/loading/loading';
+
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import { mapGetters, mapActions } from 'vuex';
 
@@ -30,7 +35,8 @@ export default {
   data() {
     return {
       swiperOption: {},
-      curIndex: 0
+      curIndex: 0,
+      loadView: [0]
     };
   },
   computed: {
@@ -50,7 +56,10 @@ export default {
   },
   watch: {
     curIndex(now, old) {
-      if (now === old) return;
+      if (now === this.$refs.swiper.swiper.activeIndex) {
+        if (!(now in this.loadView)) this.loadView.push(now);
+        return;
+      }
       this.$refs.swiper.swiper.slideTo(now, 200, false);
     }
   },
@@ -60,7 +69,8 @@ export default {
     Player,
     Alert,
     swiper,
-    swiperSlide
+    swiperSlide,
+    Loading
   }
 };
 </script>
@@ -70,4 +80,8 @@ export default {
 
 #app, .swiper
   height: 100%
+  .loading
+    position: absolute
+    top: 30%
+    transform: translateY(-50%)
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="loading_bg" @click="clickHandler" v-show="showFlag">
     <div class="loading_wrapper">
-      <loading v-if="network"></loading>
+      <loading v-if="network" size="large"></loading>
       <div class="out" v-else>
         <i class="icon-signal_wifi_off icon"></i>
         <span class="text">请检查网络连接</span>
@@ -68,7 +68,7 @@ export default {
   .loading_wrapper
     position: absolute
     width: 100%
-    top: 50%
+    top: 30%
     transform: translateY(-50%)
     .out
       text-align: center

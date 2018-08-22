@@ -132,6 +132,7 @@ export default {
     overflow: hidden
     .slider_wrapper
       width: 100%
+      min-height: 128px
     .recommed_list
       .list_title
         height: 65px
