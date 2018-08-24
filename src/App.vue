@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <m-header></m-header>
+  <div id="app" @touchstart="moveStart" @touchmove="moving" @touchend="moveEnd">
+    <m-header @show-menu="showMenu"></m-header>
     <tab v-model="curIndex"></tab>
     <div class="main">
       <swiper class="swiper" :options="swiperOption" ref="swiper" @slideChange="slideChange">
@@ -13,6 +13,7 @@
       </swiper>
     </div>
     <router-view></router-view>
+    <user-side ref="userside"></user-side>
     <player></player>
     <alert :alert="alert"></alert>
   </div>
@@ -25,6 +26,7 @@ import Player from '@/components/player/player';
 import Alert from '@/base/alert/alert';
 import Users from '@/api/Users';
 import Loading from '@/base/loading/loading';
+import UserSide from '@/components/user-side/user-side';
 
 import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import { mapGetters, mapActions } from 'vuex';
@@ -35,7 +37,9 @@ export default {
     return {
       swiperOption: {},
       curIndex: 0,
-      loadView: [0]
+      loadView: [0],
+      startX: 0,
+      touch: false
     };
   },
   computed: {
@@ -46,6 +50,31 @@ export default {
     this.setInfo(userinfo);
   },
   methods: {
+    moveStart(e) {
+      this.startX = e.touches[0].pageX;
+      this.touch = true;
+      if (this.startX < 15) {
+        this.$refs.swiper.swiper.allowTouchMove = false;
+        this.$refs.userside.startShow();
+      }
+    },
+    moving(e) {
+      if (this.touch && this.startX < 15) {
+        let endX = e.touches[0].pageX;
+        let offset = endX - this.startX;
+        this.$refs.userside.inShow(offset);
+      }
+    },
+    moveEnd(e) {
+      let endX = e.changedTouches[0].pageX;
+      let offset = endX - this.startX;
+      this.$refs.userside.endShow(offset);
+      this.touch = false;
+      this.$refs.swiper.swiper.allowTouchMove = true;
+    },
+    showMenu() {
+      this.$refs.userside.show();
+    },
     slideChange() {
       this.curIndex = this.$refs.swiper.swiper.activeIndex;
     },
@@ -69,7 +98,8 @@ export default {
     Alert,
     swiper,
     swiperSlide,
-    Loading
+    Loading,
+    UserSide
   }
 };
 </script>

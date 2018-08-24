@@ -54,7 +54,7 @@ export default {
         .then(() => {
           this.setInfo(Users.getUserinfo());
           this.$refs.slideLayer.requestEnd();
-          this.$router.push('/recommend');
+          this.$router.push('/');
         })
         .catch(err => {
           if (err) {

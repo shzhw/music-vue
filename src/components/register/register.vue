@@ -243,7 +243,7 @@ export default {
                 })
                   .then(() => {
                     this.setInfo(Users.getUserinfo());
-                    this.$router.push('/recommend');
+                    this.$router.push('/');
                   })
                   .catch(() => {});
               }

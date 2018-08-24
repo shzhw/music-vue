@@ -2,6 +2,7 @@
  * Created by ww on 2017/9/4.
  */
 import * as types from './mutation_types';
+import avatar from '@/common/images/default.png';
 
 const mutations = {
   [types.SET_SINGER](state, singer) {
@@ -41,6 +42,9 @@ const mutations = {
     state.favoriteList = list;
   },
   [types.SET_USERINFO](state, info) {
+    if (info && !info.avatar) {
+      info.avatar = avatar;
+    }
     state.userinfo = info;
   },
   [types.SET_ALERT](state, alert) {

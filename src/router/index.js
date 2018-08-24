@@ -39,8 +39,8 @@ const TopList = resolve => {
     resolve(toplist);
   });
 };
-const UserContent = resolve => {
-  import('@/components/user-content/user-content').then(userContent => {
+const MyMusic = resolve => {
+  import('@/components/my-music/my-music').then(userContent => {
     resolve(userContent);
   });
 };
@@ -149,8 +149,8 @@ const router = new Router({
     //   ]
     // },
     {
-      path: '/userinfo',
-      component: UserContent,
+      path: '/mymusic',
+      component: MyMusic,
       meta: {
         requireAuth: true
       }
