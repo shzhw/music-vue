@@ -38,15 +38,16 @@ export default {
   height: 44px
   line-height: 44px
   font-size: $font-size-medium
+  background-color: $color-bakcground-header
   .tab-item
     flex: 1
     text-align: center
     .tab-link
       padding-bottom: 5px
-      color: $color-text-l
+      color: $color-text-header
     &.active
       .tab-link
-        color: $color-theme
-        border-bottom: 2px solid $color-theme
+        font-size: 16px
+        border-bottom: 2px solid $color-text-header
         font-weight: bold
 </style>
