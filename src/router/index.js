@@ -40,7 +40,13 @@ const TopList = resolve => {
   });
 };
 const MyMusic = resolve => {
-  import('@/components/my-music/my-music').then(userContent => {
+  import('@/components/my-music/my-music').then(myMusic => {
+    resolve(myMusic);
+  });
+};
+
+const UserContent = resolve => {
+  import('@/components/user-content/user-content').then(userContent => {
     resolve(userContent);
   });
 };
@@ -69,24 +75,6 @@ const router = new Router({
         rank: Rank,
         search: Search
       }
-      // children: [
-      //   {
-      //     path: '/recommend/:id',
-      //     component: Disc
-      //   },
-      //   {
-      //     path: '/singer/:id',
-      //     component: SingerDetail
-      //   },
-      //   {
-      //     path: '/rank/:id',
-      //     component: TopList
-      //   },
-      //   {
-      //     path: '/search/:id',
-      //     component: SingerDetail
-      //   }
-      // ]
     },
     {
       path: '/recommend/:id',
@@ -104,53 +92,16 @@ const router = new Router({
       path: '/search/:id',
       component: SingerDetail
     },
-    // {
-    //   path: '/',
-    //   redirect: '/recommend'
-    // },
-    // {
-    //   path: '/recommend',
-    //   component: Recommed,
-    //   children: [
-    //     {
-    //       path: ':id',
-    //       component: Disc
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: '/singer',
-    //   component: Singer,
-    //   children: [
-    //     {
-    //       path: ':id',
-    //       component: SingerDetail
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: '/rank',
-    //   component: Rank,
-    //   children: [
-    //     {
-    //       path: ':id',
-    //       component: TopList
-    //     }
-    //   ]
-    // },
-    // {
-    //   path: '/search',
-    //   component: Search,
-    //   children: [
-    //     {
-    //       path: ':id',
-    //       component: SingerDetail
-    //     }
-    //   ]
-    // },
     {
       path: '/mymusic',
       component: MyMusic,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
+      path: '/usercontent',
+      component: UserContent,
       meta: {
         requireAuth: true
       }

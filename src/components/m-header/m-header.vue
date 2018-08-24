@@ -7,7 +7,7 @@
        <router-link to="/login" class="user" tag="div" v-if="!userinfo">
         <i class="icon-mine"></i>
       </router-link>
-      <router-link to="/userinfo" class="mine" tag="div" v-else>
+      <router-link to="/usercontent" class="mine" tag="div" v-else>
         <!-- <i class="avatar" v-if="userinfo.avatar"><img :src="userinfo.avatar" alt=""></i>
         <i class="icon-mine" v-else></i> -->
         <i class="avatar"><img :src="userinfo.avatar" alt=""></i>

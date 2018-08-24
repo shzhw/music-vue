@@ -1,5 +1,4 @@
 <template>
-
   <div class="side_layer" v-if="isShow" @touchstart.stop="moveStart" @touchmove.stop="moving" @touchend.stop="moveEnd">
     <transition :name="showType?'':'faded'">
       <div class="side_bg" ref="bg" @click="hide" v-if="sideShow"></div>
@@ -41,7 +40,6 @@
       </dl>
     </transition>
   </div>
-
 </template>
 
 <script type="text/ecmascript-6">
