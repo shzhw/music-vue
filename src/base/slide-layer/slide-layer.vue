@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       startX: 0,
-      touch: false
+      touch: false,
+      isEnable: true
     };
   },
   computed: {
@@ -35,11 +36,22 @@ export default {
     }
   },
   methods: {
+    disable() {
+      this.isEnable = false;
+    },
+    enable() {
+      this.isEnable = true;
+    },
     moveStart(e) {
+      if (!this.isEnable) return;
       this.startX = e.touches[0].pageX;
       this.touch = true;
     },
     moving(e) {
+      if (!this.isEnable) {
+        this.$refs.wrapper.removeAttribute('style');
+        return;
+      }
       if (this.touch) {
         let endX = e.touches[0].pageX;
         let offset = endX - this.startX;
@@ -49,6 +61,10 @@ export default {
       }
     },
     moveEnd(e) {
+      if (!this.isEnable) {
+        this.touch = false;
+        return;
+      }
       let endX = e.changedTouches[0].pageX;
       let offset = endX - this.startX;
       if (this.isRight ? offset > 100 : offset < -100) {
@@ -85,7 +101,6 @@ export default {
 
 <style lang="stylus" scoped>
 @import '../../common/stylus/variable'
-
 .box
   position: fixed
   top: 0
