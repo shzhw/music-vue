@@ -30,7 +30,7 @@ let vue = new Vue({
 
 let curtime = null;
 document.addEventListener('plusready', function() {
-  const routeList = ['/recommend', '/singer', '/rank', '/search'];
+  const HOME = '/';
   /* eslint-disable no-undef  */
   plus.key.addEventListener(
     'backbutton',
@@ -43,7 +43,7 @@ document.addEventListener('plusready', function() {
       }
       // 先判斷路徑
       const curPath = vue.$route.path;
-      if (routeList.indexOf(curPath) === -1) {
+      if (curPath === HOME) {
         vue.$router.back();
         return;
       }

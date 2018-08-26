@@ -31,8 +31,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { appbackMixin } from '@/common/js/mixin';
 
 export default {
+  mixins: [appbackMixin],
   data() {
     return {
       btns: [
@@ -79,6 +81,7 @@ export default {
   position: fixed
   top: 44px
   bottom: 0
+  z-index: 2
   width: 100%
   background-image: linear-gradient(to bottom, $color-bakcground-header 20px, $color-theme-background 1px)
   color: $color-text

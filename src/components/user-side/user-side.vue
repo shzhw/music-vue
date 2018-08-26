@@ -18,7 +18,7 @@
         <dd class="side_content">
           <ul class="menu_list">
             <router-link tag="li" to="">个性皮肤<span class="flag">官方红</span></router-link>
-            <router-link tag="li" to="">个人中心</router-link>
+            <router-link tag="li" to="/usercontent">个人中心</router-link>
           </ul>
           <ul class="menu_list">
             <router-link tag="li" to="">本地音乐</router-link>
@@ -45,8 +45,10 @@
 <script type="text/ecmascript-6">
 import { mapGetters, mapMutations } from 'vuex';
 import { clearUserInfo } from '@/common/js/cache';
+import { appbackMixin } from '@/common/js/mixin';
 
 export default {
+  mixins: [appbackMixin],
   computed: {
     ...mapGetters(['userinfo'])
   },
@@ -159,6 +161,14 @@ export default {
           this.sideShow = now;
         });
       }
+    },
+    $route: {
+      deep: true,
+      handler(now, old) {
+        if (now.path !== '/') {
+          this.isShow = false;
+        }
+      }
     }
   }
 };
@@ -167,7 +177,6 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '../../common/stylus/variable.styl'
 @import '../../common/stylus/mixin.styl'
-
 .side_layer
   width: 100%
   position: fixed

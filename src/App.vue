@@ -73,6 +73,9 @@ export default {
       this.$refs.swiper.swiper.allowTouchMove = true;
     },
     showMenu() {
+      if (this.$route.path !== '/') {
+        this.$router.push('/');
+      }
       this.$refs.userside.show();
     },
     slideChange() {
@@ -106,7 +109,6 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import 'common/stylus/variable.styl'
-
 #app
   height: 100%
   .main
