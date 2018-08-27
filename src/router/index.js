@@ -93,6 +93,13 @@ const router = new Router({
       component: SingerDetail
     },
     {
+      path: '/mymusic/:type',
+      component: MyMusic,
+      meta: {
+        requireAuth: true
+      }
+    },
+    {
       path: '/mymusic',
       component: MyMusic,
       meta: {

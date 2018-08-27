@@ -23,7 +23,7 @@
           <ul class="menu_list">
             <router-link tag="li" to="">本地音乐</router-link>
             <router-link tag="li" to="">下载管理</router-link>
-            <router-link tag="li" to="/mymusic">最近播放</router-link>
+            <router-link tag="li" to="/mymusic/1">最近播放</router-link>
             <router-link tag="li" to="/mymusic">我喜欢的音乐</router-link>
           </ul>
           <ul class="menu_list">

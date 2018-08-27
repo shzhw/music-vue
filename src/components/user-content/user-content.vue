@@ -35,41 +35,37 @@ import { appbackMixin } from '@/common/js/mixin';
 
 export default {
   mixins: [appbackMixin],
-  data() {
-    return {
-      btns: [
+  computed: {
+    btns() {
+      return [
         {
           icon: '',
           name: '本地音乐',
-          desc: 143,
+          desc: 0,
           url: ''
         },
         {
           icon: '',
           name: '下载音乐',
-          desc: 143,
+          desc: 0,
           url: ''
         },
         {
           icon: '',
           name: '最近播放',
-          desc: 143,
-          url: '/mymusic'
+          desc: this.playHistory.length,
+          url: '/mymusic/1'
         },
         {
           icon: '',
           name: '我喜欢',
-          desc: 143,
+          desc: this.favoriteList.length,
           url: '/mymusic'
         }
-      ]
-    };
-  },
-  computed: {
-    ...mapGetters(['userinfo'])
-  },
-  methods: {},
-  components: {}
+      ];
+    },
+    ...mapGetters(['userinfo', 'favoriteList', 'playHistory'])
+  }
 };
 </script>
 

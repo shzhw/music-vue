@@ -45,6 +45,11 @@ export default {
       currentIndex: 0
     };
   },
+  mounted() {
+    if (+this.$route.params.type) {
+      this.currentIndex = 1;
+    }
+  },
   computed: {
     noResult() {
       if (this.currentIndex === 0) {
@@ -99,6 +104,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '../../common/stylus/variable'
+
 .user-center
   .switches-wrapper
     margin: 10px 0 30px 0

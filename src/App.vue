@@ -45,7 +45,7 @@ export default {
   computed: {
     ...mapGetters(['alert'])
   },
-  mounted() {
+  created() {
     let userinfo = Users.getUserinfo();
     this.setInfo(userinfo);
   },
