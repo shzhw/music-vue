@@ -1,6 +1,6 @@
 <template>
   <transition name="slider">
-    <div class="music-list" @touchstart="moveStart" @touchmove="moving" @touchend="moveEnd" ref="wrapper">
+    <div class="music-list">
       <div class="back" @click="back">
         <i class="icon-back"></i>
       </div>
@@ -60,10 +60,7 @@ export default {
   },
   data() {
     return {
-      scorllY: 0,
-      touch: false,
-      startX: 0,
-      endX: 0
+      scorllY: 0
     };
   },
   computed: {
@@ -112,35 +109,6 @@ export default {
     }
   },
   methods: {
-    moveStart(e) {
-      this.startX = e.touches[0].pageX;
-      this.touch = true;
-    },
-    moving(e) {
-      if (this.touch) {
-        let endX = e.touches[0].pageX;
-        let offset = endX - this.startX;
-        if (offset > 0) {
-          this.$refs.wrapper.style.transform = `translateX(${offset}px)`;
-        }
-      }
-    },
-    moveEnd(e) {
-      let endX = e.changedTouches[0].pageX;
-      let offset = endX - this.startX;
-      if (offset > 100) {
-        this.$refs.wrapper.style.transition = 'all 0.3s';
-        this.$refs.wrapper.style.transform += `translateX(${
-          window.innerWidth
-        }px)`;
-        setTimeout(() => {
-          this.back();
-        }, 300);
-      } else {
-        this.$refs.wrapper.removeAttribute('style');
-      }
-      this.touch = false;
-    },
     update() {
       this.$emit('update');
     },

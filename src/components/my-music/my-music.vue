@@ -9,12 +9,12 @@
         <span class="text">随机播放全部</span>
       </div>
       <div class="list-wrapper" ref="listWrapper">
-        <scroll class="list-scroll" :scrollEnd="true" @scrollEnd="scrollEnd" :listenScroll="true" @scroll="scroll" :data="favoriteList" v-if="currentIndex === 0" ref="favoriteList">
+        <scroll class="list-scroll" :data="favoriteList" v-if="currentIndex === 0" ref="favoriteList">
           <div class="list-inner">
             <song-list :songs="favoriteList" @select="selectSong"></song-list>
           </div>
         </scroll>
-        <scroll class="list-scroll" :scrollEnd="true" @scrollEnd="scrollEnd" :beforeScroll="true" @beforeScroll="scroll" :listenScroll="true" @scroll="scroll" :data="playHistory" v-if="currentIndex === 1" ref="playList">
+        <scroll class="list-scroll" :data="playHistory" v-if="currentIndex === 1" ref="playList">
           <div class="list-inner">
             <song-list :songs="playHistory" @select="selectSong"></song-list>
           </div>
@@ -63,12 +63,6 @@ export default {
     ...mapGetters(['favoriteList', 'playHistory'])
   },
   methods: {
-    scroll() {
-      this.$refs.layer.disable();
-    },
-    scrollEnd() {
-      this.$refs.layer.enable();
-    },
     handlePlayList(playList) {
       const bottom = playList.length > 0 ? '60px' : '';
       this.$refs.listWrapper.style.bottom = bottom;

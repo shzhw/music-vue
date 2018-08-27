@@ -1,6 +1,6 @@
 <template>
   <transition :name="isRight?'slide':'slide-l'">
-    <div class="box" @touchstart="moveStart" @touchmove="moving" @touchend="moveEnd" ref="wrapper">
+    <div class="box">
       <div class="back" @click="back">
         <i class="icon-back"></i>
       </div>
@@ -20,13 +20,6 @@ export default {
       default: 'right'
     }
   },
-  data() {
-    return {
-      startX: 0,
-      touch: false,
-      isEnable: true
-    };
-  },
   computed: {
     isRight() {
       return this.direction === 'right';
@@ -36,49 +29,6 @@ export default {
     }
   },
   methods: {
-    disable() {
-      this.isEnable = false;
-    },
-    enable() {
-      this.isEnable = true;
-    },
-    moveStart(e) {
-      if (!this.isEnable) return;
-      this.startX = e.touches[0].pageX;
-      this.touch = true;
-    },
-    moving(e) {
-      if (!this.isEnable) {
-        this.$refs.wrapper.removeAttribute('style');
-        return;
-      }
-      if (this.touch) {
-        let endX = e.touches[0].pageX;
-        let offset = endX - this.startX;
-        if (this.isRight ? offset > 0 : offset < 0) {
-          this.$refs.wrapper.style.transform = `translateX(${offset}px)`;
-        }
-      }
-    },
-    moveEnd(e) {
-      if (!this.isEnable) {
-        this.touch = false;
-        return;
-      }
-      let endX = e.changedTouches[0].pageX;
-      let offset = endX - this.startX;
-      if (this.isRight ? offset > 100 : offset < -100) {
-        this.$refs.wrapper.style.transition = 'all 0.3s';
-        this.$refs.wrapper.style.transform += `translateX(${window.innerWidth *
-          this.flag}px)`;
-        setTimeout(() => {
-          this.back();
-        }, 200);
-      } else {
-        this.$refs.wrapper.removeAttribute('style');
-      }
-      this.touch = false;
-    },
     back() {
       if (this.$refs.loadingLayer.isShow) {
         this.$refs.loadingLayer.hide();
