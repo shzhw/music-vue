@@ -77,4 +77,8 @@ apiRoutes.get('/search', function(req, res) {
     });
 });
 
+apiRoutes.get('/test', function(req, res) {
+  res.send('this is api test');
+});
+
 module.exports = apiRoutes;

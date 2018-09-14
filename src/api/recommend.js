@@ -15,7 +15,8 @@ export function getRecommend() {
 }
 
 export function getDiscList() {
-  const url = proxyUrl + '/api/getDiscList';
+  // const url = proxyUrl + '/api/getDiscList';
+  const url = proxyUrl + '/mapi/getDiscList.php';
   const data = Object.assign({}, commonParamas, {
     platform: 'yqq',
     hostUin: 0,
@@ -30,7 +31,8 @@ export function getDiscList() {
 }
 
 export function getSongList(disstid) {
-  const url = proxyUrl + `/api/songlist`;
+  // const url = proxyUrl + `/api/songlist`;
+  const url = proxyUrl + `/mapi/songlist.php`;
   const data = Object.assign({}, commonParamas, {
     disstid,
     type: 1,
