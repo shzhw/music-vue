@@ -236,7 +236,7 @@ export default {
               text: '注册成功',
               isShow: true,
               hidecbk: () => {
-                // 登陆
+                // 登录
                 Users.login({
                   username: this.username.value,
                   password: this.pwd.value

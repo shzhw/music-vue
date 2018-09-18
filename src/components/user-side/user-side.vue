@@ -35,7 +35,7 @@
         <dd class="side_foot">
           <a class="item_a" href="javascript:void(0)">夜间模式</a>
           <a class="item_a" href="javascript:void(0)">设置</a>
-          <a class="item_a" href="javascript:void(0)" @click="loginout"><i class="icon icon-power-off"></i>注销</a>
+          <a class="item_a" href="javascript:void(0)" @click="loginout" v-if="userinfo"><i class="icon icon-power-off"></i>注销</a>
         </dd>
       </dl>
     </transition>
@@ -177,6 +177,7 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import '../../common/stylus/variable.styl'
 @import '../../common/stylus/mixin.styl'
+
 .side_layer
   width: 100%
   position: fixed

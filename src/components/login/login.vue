@@ -14,7 +14,7 @@
               <input type="password" class="pswd" placeholder="请输入密码" autocomplete="off" v-model="userpwd">
             </li>
             <li class="login_btn_box">
-              <button type="submit" class="login_btn">登陆</button>
+              <button type="submit" class="login_btn">登录</button>
             </li>       
           </ul>
         </form>

@@ -16,4 +16,4 @@ export const options = {
 
 export const ERR_OK = 0;
 
-export const proxyUrl = 'www.caozhicong.com';
+export const proxyUrl = 'http://www.caozhicong.com';
