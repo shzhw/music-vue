@@ -35,7 +35,9 @@ document.addEventListener('plusready', function() {
   plus.key.addEventListener(
     'backbutton',
     function() {
-      if (vue.$store.state.disableBack) return;
+      if (vue.$store.state.disableBack) {
+        return vue.$store.commit('SET_DISABLEBACK', false);
+      }
       // 先判斷播放器浮層
       if (vue.$store.state.fullScreen) {
         vue.$store.commit('SET_FULL_SCREEN', false);
@@ -43,7 +45,7 @@ document.addEventListener('plusready', function() {
       }
       // 先判斷路徑
       const curPath = vue.$route.path;
-      if (curPath === HOME) {
+      if (curPath !== HOME) {
         vue.$router.back();
         return;
       }

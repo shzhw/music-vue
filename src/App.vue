@@ -35,7 +35,10 @@ export default {
   name: 'app',
   data() {
     return {
-      swiperOption: {},
+      swiperOption: {
+        touchAngle: 1,
+        threshold: 50
+      },
       curIndex: 0,
       loadView: [0],
       startX: 0,

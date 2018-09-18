@@ -76,6 +76,9 @@ export default {
     hide() {
       this.showFlag = false;
     },
+    isShow() {
+      return this.showFlag;
+    },
     selectSuggest() {
       this.saveSearch();
       this.showTip();

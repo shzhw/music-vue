@@ -31,10 +31,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { appbackMixin } from '@/common/js/mixin';
 
 export default {
-  mixins: [appbackMixin],
   computed: {
     btns() {
       return [

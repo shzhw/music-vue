@@ -135,20 +135,19 @@ export const appbackMixin = {
       plus.key.addEventListener(
         'backbutton',
         () => {
-          this.showFlag = false;
+          if (this.isShow()) this.hide();
+          if (!this.disableBack) this.setDisBack(true);
         },
         false
       );
     });
   },
-  mthods: {
+  computed: {
+    ...mapGetters(['disableBack'])
+  },
+  methods: {
     ...mapMutations({
       setDisBack: 'SET_DISABLEBACK'
     })
-  },
-  watch: {
-    showFlag(newVal) {
-      this.setDisBack(newVal);
-    }
   }
 };

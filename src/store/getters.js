@@ -32,3 +32,5 @@ export const favoriteList = state => state.favoriteList;
 export const userinfo = state => state.userinfo;
 
 export const alert = state => state.alert;
+
+export const disableBack = state => state.disableBack;

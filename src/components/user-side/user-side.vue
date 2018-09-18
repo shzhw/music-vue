@@ -1,5 +1,5 @@
 <template>
-  <div class="side_layer" v-if="isShow" @touchstart.stop="moveStart" @touchmove.stop="moving" @touchend.stop="moveEnd">
+  <div class="side_layer" v-if="showFlag" @touchstart.stop="moveStart" @touchmove.stop="moving" @touchend.stop="moveEnd">
     <transition :name="showType?'':'faded'">
       <div class="side_bg" ref="bg" @click="hide" v-if="sideShow"></div>
     </transition>
@@ -57,7 +57,7 @@ export default {
       boundary: 80,
       startX: 0,
       touch: false,
-      isShow: false,
+      showFlag: false,
       sideShow: false,
       showing: false,
       showType: 0 // 0为正常，1为拖动
@@ -100,7 +100,7 @@ export default {
     },
     startShow() {
       this.showType = 1;
-      this.isShow = true;
+      this.showFlag = true;
       this.sideShow = true;
       this.showing = true;
       this.$nextTick(() => {
@@ -142,20 +142,23 @@ export default {
       this.showType = 0;
     },
     show() {
-      this.isShow = true;
+      this.showFlag = true;
     },
     hide() {
       this.sideShow = false;
       setTimeout(() => {
-        this.isShow = false;
+        this.showFlag = false;
       }, 300); // 动画时间 .3s
+    },
+    isShow() {
+      return this.showFlag;
     },
     ...mapMutations({
       setUserinfo: 'SET_USERINFO'
     })
   },
   watch: {
-    isShow(now) {
+    showFlag(now) {
       if (now && !this.showing) {
         setTimeout(() => {
           this.sideShow = now;
@@ -166,7 +169,7 @@ export default {
       deep: true,
       handler(now, old) {
         if (now.path !== '/') {
-          this.isShow = false;
+          this.showFlag = false;
         }
       }
     }
