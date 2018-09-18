@@ -15,7 +15,7 @@ export function getHotKey() {
 
 export function search(query, page, zhida, perpage) {
   // const url = proxyUrl + '/api/search';
-  const url = proxyUrl + '/mapi/search.php';
+  const url = proxyUrl + '/musicapi/search.php';
   const data = Object.assign({}, commonParamas, {
     w: query,
     p: page,
