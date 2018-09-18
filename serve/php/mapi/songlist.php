@@ -5,5 +5,9 @@ $opt=array('http'=>array('header'=>"Referer: https://y.qq.com/portal/playlist.ht
 $context=stream_context_create($opt); 
 
 $url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg?'.$params;
-echo file_get_contents($url,false, $context);
+$res = file_get_contents($url,false, $context);
+if (strstr($res, 0, 2) !== '__') {
+  $res = '__'.$res;
+}
+echo $res;
 ?>

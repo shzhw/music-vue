@@ -135,8 +135,10 @@ export const appbackMixin = {
       plus.key.addEventListener(
         'backbutton',
         () => {
-          if (this.isShow()) this.hide();
-          if (!this.disableBack) this.setDisBack(true);
+          if (this.isShow()) {
+            this.hide();
+            if (!this.disableBack) this.setDisBack(true);
+          }
         },
         false
       );

@@ -52,9 +52,12 @@ document.addEventListener('plusready', function() {
       // 再判斷時間
       if (!curtime || new Date() - curtime > 3000) {
         curtime = new Date();
-        plus.nativeUI.toast('再按一次退出程序！');
+        // plus.nativeUI.toast('再按一次退出程序！');
+        plus.nativeUI.toast('再按一次返回桌面！');
       } else {
-        plus.runtime.quit();
+        // plus.runtime.quit();
+        var main = plus.android.runtimeMainActivity();
+        main && main.moveTaskToBack(false);
       }
     },
     false
