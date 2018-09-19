@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       swiperOption: {
-        touchAngle: 1,
+        touchAngle: 10,
         threshold: 50
       },
       curIndex: 0,
