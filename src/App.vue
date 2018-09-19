@@ -3,14 +3,16 @@
     <m-header @show-menu="showMenu"></m-header>
     <tab v-model="curIndex"></tab>
     <div class="main">
-      <swiper class="swiper" :options="swiperOption" ref="swiper" @slideChange="slideChange">
-        <swiper-slide v-for="(item,i) in ['recommed', 'singer', 'rank', 'search']" :key="i">
-          <keep-alive v-if="loadView.indexOf(i) !== -1">
-            <router-view :name="item"></router-view> 
-          </keep-alive>
-          <loading class="loading" v-else size="large"></loading>
-        </swiper-slide>
-      </swiper>
+      <div ref="slider" style="width:100%;height:100%">
+        <ul class="swiper">
+          <li class="swiper_slide" v-for="(item,i) in ['recommed', 'singer', 'rank', 'search']" :key="i">
+            <keep-alive v-if="loadView.indexOf(i) !== -1">
+              <router-view :name="item"></router-view> 
+            </keep-alive>
+            <loading class="loading" v-else size="large"></loading>
+          </li>
+        </ul>
+      </div>
     </div>
     <router-view></router-view>
     <user-side ref="userside"></user-side>
@@ -28,21 +30,18 @@ import Users from '@/api/Users';
 import Loading from '@/base/loading/loading';
 import UserSide from '@/components/user-side/user-side';
 
-import { swiper, swiperSlide } from 'vue-awesome-swiper';
 import { mapGetters, mapActions } from 'vuex';
+import BScroll from 'better-scroll';
 
 export default {
   name: 'app',
   data() {
     return {
-      swiperOption: {
-        touchAngle: 10,
-        threshold: 50
-      },
       curIndex: 0,
       loadView: [0],
       startX: 0,
-      touch: false
+      touch: false,
+      screenW: window.innerWidth
     };
   },
   computed: {
@@ -52,12 +51,27 @@ export default {
     let userinfo = Users.getUserinfo();
     this.setInfo(userinfo);
   },
+  mounted() {
+    this.slider = new BScroll(this.$refs.slider, {
+      click: false,
+      scrollX: true,
+      scrollY: false,
+      bounce: false,
+      momentum: false,
+      snap: {
+        loop: false,
+        threshold: 0.3
+      }
+    });
+    this.slider.on('scrollEnd', () => {
+      this.curIndex = this.slider.getCurrentPage().pageX;
+    });
+  },
   methods: {
     moveStart(e) {
       this.startX = e.touches[0].pageX;
       this.touch = true;
       if (this.startX < 15) {
-        this.$refs.swiper.swiper.allowTouchMove = false;
         this.$refs.userside.startShow();
       }
     },
@@ -73,7 +87,6 @@ export default {
       let offset = endX - this.startX;
       this.$refs.userside.endShow(offset);
       this.touch = false;
-      this.$refs.swiper.swiper.allowTouchMove = true;
     },
     showMenu() {
       if (this.$route.path !== '/') {
@@ -81,8 +94,9 @@ export default {
       }
       this.$refs.userside.show();
     },
-    slideChange() {
-      this.curIndex = this.$refs.swiper.swiper.activeIndex;
+    goPage(index) {
+      if (this.loadView.indexOf(index) === -1) this.loadView.push(index);
+      this.slider.goToPage(index, 0, 0);
     },
     ...mapActions({
       setInfo: 'setUserInfo'
@@ -90,11 +104,8 @@ export default {
   },
   watch: {
     curIndex(now, old) {
-      if (this.loadView.indexOf(now) === -1) this.loadView.push(now);
-      if (now === this.$refs.swiper.swiper.activeIndex) {
-        return;
-      }
-      this.$refs.swiper.swiper.slideTo(now, 200, false);
+      if (now === old) return;
+      this.goPage(now);
     }
   },
   components: {
@@ -102,8 +113,6 @@ export default {
     Tab,
     Player,
     Alert,
-    swiper,
-    swiperSlide,
     Loading,
     UserSide
   }
@@ -112,6 +121,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import 'common/stylus/variable.styl'
+
 #app
   height: 100%
   .main
@@ -121,6 +131,12 @@ export default {
     width: 100%
     .swiper
       height: 100%
+      width: 400%
+      display: flex
+      overflow: hidden
+      .swiper_slide
+        flex: 1
+        position: relative
       .loading
         position: absolute
         top: 30%
